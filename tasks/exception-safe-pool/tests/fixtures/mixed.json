@@ -1,0 +1,20 @@
+{
+  "max_size": 3,
+  "fail_factory_at_calls": [2],
+  "ops": [
+    {"op": "acquire", "id": "h1"},
+    {"op": "acquire_factory_fails"},
+    {"op": "acquire", "id": "h2"},
+    {"op": "with_raise", "id": "a"},
+    {"op": "acquire", "id": "h3"},
+    {"op": "acquire_exhausted"},
+    {"op": "mark_broken_release", "id": "h1"},
+    {"op": "with_mark_broken_raise", "id": "b"},
+    {"op": "acquire", "id": "h4"},
+    {"op": "acquire_exhausted"},
+    {"op": "release", "id": "h2"},
+    {"op": "release", "id": "h3"},
+    {"op": "release", "id": "h4"},
+    {"op": "with_ok", "id": "c"}
+  ]
+}

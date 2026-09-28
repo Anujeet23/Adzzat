@@ -1,0 +1,25 @@
+schema_version = "1.2"
+artifacts = ["/app/submission"]
+[task]
+name = "adzzat/beam-search"
+description = "Fix a beam search decoder so pruning uses raw score, length normalization is applied only at final ranking, and score ties are broken deterministically."
+keywords = ["machine-learning", "beam-search", "sequence-decoding", "ml-infrastructure"]
+[metadata]
+difficulty = "unvalidated"
+category = "ml-ai"
+version = "0.1.0"
+[agent]
+timeout_sec = 14400.0
+[verifier]
+timeout_sec = 1800.0
+environment_mode = "separate"
+[verifier.environment]
+build_timeout_sec = 900.0
+cpus = 2
+memory_mb = 2048
+storage_mb = 4096
+[environment]
+build_timeout_sec = 900.0
+cpus = 2
+memory_mb = 2048
+storage_mb = 4096

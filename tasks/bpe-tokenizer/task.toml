@@ -1,0 +1,25 @@
+schema_version = "1.2"
+artifacts = ["/app/submission"]
+[task]
+name = "adzzat/bpe-tokenizer"
+description = "Fix a byte-pair-encoding trainer/encoder: deterministic tie-breaking during training, and priority-ordered (not left-to-right) merge application during encoding."
+keywords = ["machine-learning", "tokenization", "bpe", "ml-infrastructure"]
+[metadata]
+difficulty = "unvalidated"
+category = "ml-ai"
+version = "0.1.0"
+[agent]
+timeout_sec = 14400.0
+[verifier]
+timeout_sec = 1800.0
+environment_mode = "separate"
+[verifier.environment]
+build_timeout_sec = 900.0
+cpus = 2
+memory_mb = 2048
+storage_mb = 4096
+[environment]
+build_timeout_sec = 900.0
+cpus = 2
+memory_mb = 2048
+storage_mb = 4096

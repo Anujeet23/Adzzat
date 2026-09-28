@@ -1,0 +1,13 @@
+{
+  "ops": [
+    {"op": "put", "key": "alpha", "value": "1"},
+    {"op": "put", "key": "beta", "value": "2"},
+    {"op": "put", "key": "alpha", "value": "1b"},
+    {"op": "delete", "key": "beta"},
+    {"op": "put", "key": "gamma", "value": "3"},
+    {"op": "compact"},
+    {"op": "put", "key": "delta", "value": "4"},
+    {"op": "delete", "key": "alpha"},
+    {"op": "get", "key": "gamma"}
+  ]
+}

@@ -1,0 +1,14 @@
+{
+  "max_size": 2,
+  "fail_factory_at_calls": [1],
+  "ops": [
+    {"op": "acquire_factory_fails"},
+    {"op": "acquire", "id": "h1"},
+    {"op": "acquire", "id": "h2"},
+    {"op": "acquire_exhausted"},
+    {"op": "release", "id": "h1"},
+    {"op": "release", "id": "h2"},
+    {"op": "acquire", "id": "h3"},
+    {"op": "release", "id": "h3"}
+  ]
+}

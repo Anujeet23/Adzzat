@@ -1,0 +1,15 @@
+{
+  "max_size": 2,
+  "ops": [
+    {"op": "with_ok", "id": "a"},
+    {"op": "with_raise", "id": "b"},
+    {"op": "acquire", "id": "h1"},
+    {"op": "with_raise", "id": "c"},
+    {"op": "acquire", "id": "h2"},
+    {"op": "acquire_exhausted"},
+    {"op": "release", "id": "h1"},
+    {"op": "with_raise", "id": "d"},
+    {"op": "release", "id": "h2"},
+    {"op": "with_ok", "id": "e"}
+  ]
+}

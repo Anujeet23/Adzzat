@@ -1,0 +1,25 @@
+schema_version = "1.2"
+artifacts = ["/app/submission"]
+[task]
+name = "adzzat/crash-safe-kv-store"
+description = "Harden an embedded key-value store so it survives a kill at any point, including mid-compaction, without data loss, corruption, or reader-visible tearing."
+keywords = ["systems-programming", "durability", "crash-consistency", "storage-engine"]
+[metadata]
+difficulty = "unvalidated"
+category = "software-engineering"
+version = "0.1.0"
+[agent]
+timeout_sec = 14400.0
+[verifier]
+timeout_sec = 3000.0
+environment_mode = "separate"
+[verifier.environment]
+build_timeout_sec = 900.0
+cpus = 2
+memory_mb = 2048
+storage_mb = 4096
+[environment]
+build_timeout_sec = 900.0
+cpus = 2
+memory_mb = 2048
+storage_mb = 4096

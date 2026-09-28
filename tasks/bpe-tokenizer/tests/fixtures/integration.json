@@ -1,0 +1,6 @@
+{
+  "kind": "train_and_encode",
+  "word_freqs": {"low": 5, "lower": 2, "newest": 6, "widest": 3},
+  "num_merges": 10,
+  "encode_words": ["low", "lower", "newest", "widest", "lowest", "wider"]
+}

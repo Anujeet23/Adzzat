@@ -1,0 +1,16 @@
+{
+  "max_size": 3,
+  "ops": [
+    {"op": "acquire", "id": "h1"},
+    {"op": "acquire", "id": "h2"},
+    {"op": "acquire", "id": "h3"},
+    {"op": "acquire_exhausted"},
+    {"op": "release", "id": "h1"},
+    {"op": "acquire", "id": "h4"},
+    {"op": "release", "id": "h2"},
+    {"op": "release", "id": "h3"},
+    {"op": "release", "id": "h4"},
+    {"op": "acquire", "id": "h5"},
+    {"op": "release", "id": "h5"}
+  ]
+}

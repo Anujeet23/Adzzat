@@ -1,0 +1,12 @@
+{
+  "ops": [
+    {"op": "put", "key": "k0", "value": "v0-aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"},
+    {"op": "put", "key": "k1", "value": "v1-bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb"},
+    {"op": "put", "key": "k2", "value": "v2-cccccccccccccccccccccccccccccccc"},
+    {"op": "delete", "key": "k1"},
+    {"op": "put", "key": "k3", "value": "v3-dddddddddddddddddddddddddddddddd"},
+    {"op": "put", "key": "k2", "value": "v2-updated-eeeeeeeeeeeeeeeeeeeeeeee"},
+    {"op": "delete", "key": "k0"},
+    {"op": "put", "key": "k4", "value": "v4-ffffffffffffffffffffffffffffffff"}
+  ]
+}
