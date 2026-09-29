@@ -35,7 +35,7 @@ Each task directory follows the same structure:
 
 All ten task packages are complete and validated end-to-end through real Docker containers (build, oracle run, broken-starter run). **Outstanding before final submission**, per the brief's acceptance bars:
 
-- **5-rollout evidence** against Opus 5 / GPT-5.6 (pass rate ≤2/5, bimodal score spread, 100+ agent steps per successful rollout) — requires Harbor/Terminal-Bench plus live model access.
-- **QC/QA script** run — not yet received.
+- **5-rollout evidence** against Opus 5 / GPT-5.6 (pass rate ≤2/5, bimodal score spread, 100+ agent steps per successful rollout) — requires Harbor/Terminal-Bench plus live model access; not run (see `qa/report.html`, criterion 2, for a free zero-cost proxy check using agentic subagents in place of paid rollouts, flagged there as a risk since it is not equivalent to real model evidence).
+- **QC/QA script**, run using the runbook's own Appendix scripts (`eval_guide.md` rubric + `dq_audit.py`): 4/10 tasks flagged. Findings on 3 tasks were real grading-instrumentation bypasses (submission-controlled infrastructure files could self-report favorable stats instead of the harness measuring them) and a weak test fixture; all three have been fixed and re-validated in Docker — see `tasks/fast-matmul/README.md`, `tasks/cache-blocked-transpose/README.md`, and `tasks/beam-search/README.md`. Full merged results in `qa/report.html` and `qa/results.jsonl`.
 
 See each task's own `README.md` for full validation detail.

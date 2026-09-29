@@ -1,18 +1,7 @@
-"""Scalar-multiplication primitive.
-
-Every scalar multiplication your matmul implementation performs -- at any
-level of recursion -- must go through this function, called via the module
-reference (`from . import ops; ops.mul(x, y)`), not `from .ops import mul`.
-
-Matrix elements are `Sealed` values. `*` between two Sealed values (or a
-Sealed value and a plain number) always raises TypeError -- there is no way
-to compute a correct product without calling `ops.mul`. `+`, `-`, and unary
-`-` are unrestricted and work normally between Sealed values and plain
-numbers.
-
-This file is graded infrastructure: whatever you submit at this path is
-ignored, and the verifier always substitutes its own trusted copy before
-running your code. Only kernel/matmul.py is graded.
+"""Trusted, grader-authoritative copy of kernel/ops.py. The verifier always
+substitutes this file over whatever the submission provided at that path
+before importing the submission's kernel package, so the Sealed type and
+its multiplication-only-via-ops.mul restriction cannot be tampered with.
 """
 
 

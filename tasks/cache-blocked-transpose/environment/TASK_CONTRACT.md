@@ -17,6 +17,8 @@ Every element read or write your implementation performs must go through `kernel
 
 `mem.set_array`, `mem.get_array`, and `mem.reset` are grading-support functions for setting up input and reading back output; they bypass the simulated cache and are not for use inside `transpose` itself.
 
+`kernel/mem.py` is graded infrastructure: whatever you submit at that path is ignored, and the verifier always substitutes its own trusted copy (with its own, non-gameable `stats()`) before running your code. Only `kernel/transpose.py` is graded.
+
 ## What's graded
 
 1. **Correctness.** After `transpose(n)`, array 1 must equal the true transpose of array 0, checked exactly.

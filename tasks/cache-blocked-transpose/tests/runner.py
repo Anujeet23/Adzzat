@@ -1,12 +1,30 @@
 #!/usr/bin/env python3
 """Runs the submitted transpose(n) on a deterministic n x n matrix, using
-the submission's own kernel.mem simulated cache to collect miss stats, and
+this grader's own trusted kernel.mem simulated cache (substituted over
+whatever the submission provided at that path) to collect miss stats, and
 reports the resulting array plus the miss count as JSON. Correctness
 checking against an independent reference happens in grade.py.
+
+Before importing, the submission's kernel package is copied to a writable
+staging directory and its kernel/mem.py is replaced with this grader's own
+trusted copy (mem_trusted.py, next to this file), so a submission cannot
+report its own, more favorable hit/miss counts; only kernel/transpose.py
+is graded.
 """
 import argparse
 import json
+import os
+import shutil
 import sys
+import tempfile
+
+
+def prepare_pkgdir(orig_pkgdir):
+    staged = tempfile.mkdtemp(prefix="kernel-stage-")
+    shutil.copytree(os.path.join(orig_pkgdir, "kernel"), os.path.join(staged, "kernel"))
+    trusted_mem = os.path.join(os.path.dirname(os.path.abspath(__file__)), "mem_trusted.py")
+    shutil.copyfile(trusted_mem, os.path.join(staged, "kernel", "mem.py"))
+    return staged
 
 
 def main():
@@ -18,7 +36,8 @@ def main():
 
     result = {"ok": False}
     try:
-        sys.path.insert(0, args.pkgdir)
+        staged = prepare_pkgdir(args.pkgdir)
+        sys.path.insert(0, staged)
         from kernel import mem  # noqa: E402
         from kernel import transpose  # noqa: E402
 

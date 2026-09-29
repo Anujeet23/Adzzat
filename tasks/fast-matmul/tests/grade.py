@@ -40,7 +40,7 @@ def check_submission():
 def stage(workdir):
     stage_dir = workdir / "stage"
     stage_dir.mkdir(mode=0o755)
-    for name in ("runner.py", "helpers.py"):
+    for name in ("runner.py", "helpers.py", "ops_trusted.py"):
         dst = stage_dir / name
         shutil.copyfile(HERE / name, dst)
         os.chmod(dst, 0o644)
