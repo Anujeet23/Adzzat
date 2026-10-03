@@ -1,0 +1,85 @@
+{
+  "max_size": 5,
+  "ops": [
+    {
+      "op": "put",
+      "key": "k1",
+      "value": "v1",
+      "ttl": 10
+    },
+    {
+      "op": "advance",
+      "by": 15
+    },
+    {
+      "op": "get_miss",
+      "key": "k1"
+    },
+    {
+      "op": "put",
+      "key": "k2",
+      "value": "v2",
+      "ttl": 10
+    },
+    {
+      "op": "get_hit",
+      "key": "k2",
+      "value": "v2"
+    },
+    {
+      "op": "expect_len",
+      "value": 1
+    },
+    {
+      "op": "put",
+      "key": "k3",
+      "value": "v3",
+      "ttl": 10
+    },
+    {
+      "op": "advance",
+      "by": 8
+    },
+    {
+      "op": "put",
+      "key": "k3",
+      "value": "v3b",
+      "ttl": 10
+    },
+    {
+      "op": "advance",
+      "by": 8
+    },
+    {
+      "op": "get_hit",
+      "key": "k3",
+      "value": "v3b"
+    },
+    {
+      "op": "put",
+      "key": "k4",
+      "value": "v4",
+      "ttl": 3
+    },
+    {
+      "op": "advance",
+      "by": 1
+    },
+    {
+      "op": "expect_len",
+      "value": 2
+    },
+    {
+      "op": "advance",
+      "by": 2
+    },
+    {
+      "op": "expect_len",
+      "value": 0
+    },
+    {
+      "op": "get_miss",
+      "key": "k4"
+    }
+  ]
+}

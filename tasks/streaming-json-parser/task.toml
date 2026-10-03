@@ -1,0 +1,25 @@
+schema_version = "1.2"
+artifacts = ["/app/submission"]
+[task]
+name = "adzzat/streaming-json-parser"
+description = "Fix a streaming JSON parser's depth tracking so brace/bracket characters and escaped quotes inside string values don't corrupt it."
+keywords = ["parsing", "streaming", "software-engineering"]
+[metadata]
+difficulty = "unvalidated"
+category = "program-bench"
+version = "0.1.0"
+[agent]
+timeout_sec = 14400.0
+[verifier]
+timeout_sec = 1800.0
+environment_mode = "separate"
+[verifier.environment]
+build_timeout_sec = 900.0
+cpus = 2
+memory_mb = 2048
+storage_mb = 4096
+[environment]
+build_timeout_sec = 900.0
+cpus = 2
+memory_mb = 2048
+storage_mb = 4096

@@ -1,0 +1,18 @@
+{
+  "chunks": [
+    "{\"shape\": \"left{side\"}",
+    "{\"arr_str\": \"right]bracket\"}"
+  ],
+  "expected": [
+    [
+      {
+        "shape": "left{side"
+      }
+    ],
+    [
+      {
+        "arr_str": "right]bracket"
+      }
+    ]
+  ]
+}

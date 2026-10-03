@@ -1,0 +1,18 @@
+{
+  "chunks": [
+    "{\"msg\": \"say \\\"hi {there\\\" done\"}",
+    "{\"note\": \"ends with backslash\\\\\"}"
+  ],
+  "expected": [
+    [
+      {
+        "msg": "say \"hi {there\" done"
+      }
+    ],
+    [
+      {
+        "note": "ends with backslash\\"
+      }
+    ]
+  ]
+}

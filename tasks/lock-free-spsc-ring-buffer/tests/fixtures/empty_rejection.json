@@ -1,0 +1,10 @@
+{
+  "capacity": 2,
+  "ops": [
+    {"op": "pop", "expect": "empty"},
+    {"op": "push", "item": "x", "expect": true},
+    {"op": "pop", "expect": "value", "value": "x"},
+    {"op": "pop", "expect": "empty"},
+    {"op": "expect_len", "value": 0}
+  ]
+}

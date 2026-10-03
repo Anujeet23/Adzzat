@@ -1,0 +1,22 @@
+{
+  "ops": [
+    {"op": "add_node", "node": "root"},
+    {"op": "add_edge", "u": "root", "v": "a", "expect": true},
+    {"op": "add_edge", "u": "root", "v": "b", "expect": true},
+    {"op": "add_edge", "u": "a", "v": "c", "expect": true},
+    {"op": "add_edge", "u": "b", "v": "c", "expect": true},
+    {"op": "order_check"},
+    {"op": "add_edge", "u": "c", "v": "a", "expect": false},
+    {"op": "add_edge", "u": "c", "v": "root", "expect": false},
+    {"op": "add_edge", "u": "c", "v": "c", "expect": false},
+    {"op": "order_check"},
+    {"op": "add_node", "node": "late"},
+    {"op": "add_edge", "u": "c", "v": "late", "expect": true},
+    {"op": "add_edge", "u": "late", "v": "root", "expect": false},
+    {"op": "order_check"},
+    {"op": "add_edge", "u": "late", "v": "d", "expect": true},
+    {"op": "add_edge", "u": "d", "v": "e", "expect": true},
+    {"op": "add_edge", "u": "e", "v": "a", "expect": false},
+    {"op": "order_check"}
+  ]
+}

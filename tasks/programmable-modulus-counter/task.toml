@@ -1,0 +1,25 @@
+schema_version = "1.2"
+artifacts = ["/app/submission"]
+[task]
+name = "adzzat/programmable-modulus-counter"
+description = "Fix a programmable-modulus counter's off-by-one wrap and its load-doesn't-reset-count bug, verified by cycle-accurate Icarus Verilog / cocotb simulation against an independent reference model."
+keywords = ["rtl", "verilog", "digital-design", "counter"]
+[metadata]
+difficulty = "unvalidated"
+category = "rtl"
+version = "0.1.0"
+[agent]
+timeout_sec = 14400.0
+[verifier]
+timeout_sec = 1800.0
+environment_mode = "separate"
+[verifier.environment]
+build_timeout_sec = 900.0
+cpus = 2
+memory_mb = 2048
+storage_mb = 4096
+[environment]
+build_timeout_sec = 900.0
+cpus = 2
+memory_mb = 2048
+storage_mb = 4096

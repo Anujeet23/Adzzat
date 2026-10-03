@@ -1,0 +1,25 @@
+schema_version = "1.2"
+artifacts = ["/app/submission"]
+[task]
+name = "adzzat/memory-mapped-interrupt-controller"
+description = "Fix an interrupt controller's ack logic so it clears only the reported source's pending bit, not every pending interrupt, verified by cycle-accurate Icarus Verilog / cocotb simulation against an independent reference model."
+keywords = ["chip-design", "verilog", "interrupt-controller", "digital-design"]
+[metadata]
+difficulty = "unvalidated"
+category = "chip-design"
+version = "0.1.0"
+[agent]
+timeout_sec = 14400.0
+[verifier]
+timeout_sec = 1800.0
+environment_mode = "separate"
+[verifier.environment]
+build_timeout_sec = 900.0
+cpus = 2
+memory_mb = 2048
+storage_mb = 4096
+[environment]
+build_timeout_sec = 900.0
+cpus = 2
+memory_mb = 2048
+storage_mb = 4096

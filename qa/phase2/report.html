@@ -1,0 +1,646 @@
+<!doctype html><html><head><meta charset="utf-8"><title>RL Data Quality Audit</title><style>
+:root{--bg:#f0f2f5;--card:#fff;--border:#e4e6eb;--text:#1c1e21;--muted:#65676b;--accent:#1877f2;--green:#31a24c;--red:#e4405f}
+*{box-sizing:border-box}body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Arial,sans-serif;margin:0;padding:24px;background:var(--bg);color:var(--text);line-height:1.5}
+.wrap{max-width:1300px;margin:0 auto}h1{font-size:22px;margin:0 0 4px}.sub{color:var(--muted);font-size:13px;margin-bottom:16px}
+.card{background:var(--card);border-radius:8px;box-shadow:0 1px 2px rgba(0,0,0,.1);margin-bottom:16px;padding:16px 20px}
+.tiles{display:grid;grid-template-columns:repeat(auto-fit,minmax(140px,1fr));gap:12px}
+.tile{background:var(--bg);padding:14px;border-radius:8px;text-align:center}.tile .n{font-size:22px;font-weight:700}.tile .l{color:var(--muted);font-size:11px;text-transform:uppercase;letter-spacing:.5px;margin-top:2px}
+table{border-collapse:collapse;width:100%;font-size:13px}thead th{background:#f8f9fa;border-bottom:2px solid var(--border);padding:9px 11px;text-align:left;font-size:11px;text-transform:uppercase;color:var(--muted)}
+tbody td{padding:9px 11px;border-bottom:1px solid var(--border);vertical-align:middle}tr[data-i]{cursor:pointer}tr[data-i]:hover{background:#f5f7fa}tr.flag{background:#fff5f5}tr.flag:hover{background:#fee}
+.modal{display:none;position:fixed;inset:0;background:rgba(0,0,0,.45);z-index:100;justify-content:center;align-items:flex-start;padding:40px 20px;overflow-y:auto}.modal.open{display:flex}
+.box{background:#fff;border-radius:12px;max-width:900px;width:100%;padding:0 0 16px}.mh{display:flex;justify-content:space-between;padding:16px 22px;border-bottom:1px solid var(--border)}.mh h2{margin:0;font-size:16px}.x{cursor:pointer;font-size:22px;color:var(--muted);border:none;background:none}
+.mc{padding:16px 22px;max-height:75vh;overflow-y:auto}.sec{margin-bottom:12px}.st{font-size:12px;font-weight:700;text-transform:uppercase;color:var(--accent);margin-bottom:5px}
+.rat{background:#fafbfc;border:1px solid var(--border);border-radius:6px;padding:9px 11px;font-size:12px;color:#444;white-space:pre-wrap}pre{white-space:pre-wrap;background:#fafbfc;border:1px solid var(--border);border-radius:6px;padding:10px;font-size:12px;max-height:300px;overflow:auto}
+.issue{border:1px solid var(--border);border-radius:6px;margin-bottom:7px}.ih{padding:7px 11px;background:#fafbfc;border-bottom:1px solid var(--border);font-size:12px}.tag{background:#fce8e6;color:#c5221f;border-radius:4px;padding:1px 7px;font-size:10px;font-weight:600;text-transform:uppercase;margin-right:7px}.ir{padding:7px 11px;font-size:12px;color:#555}
+.f{display:flex;gap:8px;margin-bottom:12px}.fb{padding:6px 14px;border-radius:16px;border:1px solid var(--border);background:#fff;font-size:12px;cursor:pointer}.fb.on{background:var(--accent);color:#fff}
+</style></head><body><div class='wrap'><div class='card'><h1>RL Data Quality Audit</h1><div class='sub'>7 flagged / 15 tasks &bull; click a row for details</div><div class='tiles'><div class='tile'><div class='n'>15</div><div class='l'>Tasks</div></div><div class='tile'><div class='n' style='color:#e4405f'>7</div><div class='l'>Flagged</div></div><div class='tile'><div class='n' style='color:#27ae60'>4.8</div><div class='l'>Avg Clarity</div></div><div class='tile'><div class='n' style='color:#e4405f'>1</div><div class='l'>Prob. Rubrics</div></div><div class='tile'><div class='n' style='color:#f39c12'>3.6</div><div class='l'>Avg Completeness</div></div></div></div><div class='card'><div class='f'><button class='fb' data-f='all'>All (15)</button><button class='fb' data-f='flag'>Flagged (7)</button><button class='fb' data-f='clean'>Clean (8)</button></div><table><thead><tr><th>Task</th><th>Source</th><th>Clarity</th><th>Prob. Rubrics</th><th>Completeness</th><th>Score Dist</th><th>Self-Contained</th><th>Input</th><th>Env</th></tr></thead><tbody><tr data-i='0' class='flag'><td><b>lru-cache-with-ttl</b></td><td></td><td style='color:#27ae60'><b>5</b></td><td style='color:#31a24c'>0/5</td><td style='color:#f39c12'><b>3</b></td><td>yes</td><td>yes</td><td style='color:#27ae60'>5</td><td style='color:#27ae60'>5</td></tr><tr data-i='1' class=''><td><b>token-bucket-rate-limiter</b></td><td></td><td style='color:#27ae60'><b>5</b></td><td style='color:#31a24c'>0/5</td><td style='color:#27ae60'><b>4</b></td><td>yes</td><td>yes</td><td style='color:#27ae60'>5</td><td style='color:#27ae60'>5</td></tr><tr data-i='2' class=''><td><b>lock-free-spsc-ring-buffer</b></td><td></td><td style='color:#27ae60'><b>5</b></td><td style='color:#31a24c'>0/5</td><td style='color:#27ae60'><b>4</b></td><td>yes</td><td>yes</td><td style='color:#27ae60'>5</td><td style='color:#27ae60'>5</td></tr><tr data-i='3' class='flag'><td><b>incremental-topological-sort</b></td><td></td><td style='color:#27ae60'><b>5</b></td><td style='color:#31a24c'>0/5</td><td style='color:#f39c12'><b>3</b></td><td>yes</td><td>yes</td><td style='color:#27ae60'>5</td><td style='color:#27ae60'>5</td></tr><tr data-i='4' class='flag'><td><b>streaming-json-parser</b></td><td></td><td style='color:#27ae60'><b>5</b></td><td style='color:#31a24c'>0/5</td><td style='color:#f39c12'><b>3</b></td><td>yes</td><td>yes</td><td style='color:#27ae60'>5</td><td style='color:#27ae60'>5</td></tr><tr data-i='5' class=''><td><b>programmable-modulus-counter</b></td><td></td><td style='color:#27ae60'><b>4</b></td><td style='color:#31a24c'>0/5</td><td style='color:#27ae60'><b>4</b></td><td>yes</td><td>yes</td><td style='color:#27ae60'>5</td><td style='color:#27ae60'>5</td></tr><tr data-i='6' class='flag'><td><b>uart-transmitter</b></td><td></td><td style='color:#27ae60'><b>5</b></td><td style='color:#31a24c'>0/5</td><td style='color:#f39c12'><b>3</b></td><td>yes</td><td>yes</td><td style='color:#27ae60'>5</td><td style='color:#27ae60'>5</td></tr><tr data-i='7' class=''><td><b>spi-master</b></td><td></td><td style='color:#27ae60'><b>5</b></td><td style='color:#31a24c'>0/5</td><td style='color:#27ae60'><b>4</b></td><td>yes</td><td>yes</td><td style='color:#27ae60'>5</td><td style='color:#27ae60'>5</td></tr><tr data-i='8' class='flag'><td><b>pwm-duty-sync</b></td><td></td><td style='color:#27ae60'><b>4</b></td><td style='color:#e4405f'>1/5</td><td style='color:#27ae60'><b>4</b></td><td>yes</td><td>yes</td><td style='color:#27ae60'>4</td><td style='color:#27ae60'>5</td></tr><tr data-i='9' class=''><td><b>debounce-edge-detector</b></td><td></td><td style='color:#27ae60'><b>5</b></td><td style='color:#31a24c'>0/5</td><td style='color:#27ae60'><b>4</b></td><td>yes</td><td>yes</td><td style='color:#27ae60'>5</td><td style='color:#27ae60'>5</td></tr><tr data-i='10' class=''><td><b>round-robin-arbiter</b></td><td></td><td style='color:#27ae60'><b>5</b></td><td style='color:#31a24c'>0/5</td><td style='color:#27ae60'><b>4</b></td><td>yes</td><td>yes</td><td style='color:#27ae60'>5</td><td style='color:#27ae60'>5</td></tr><tr data-i='11' class=''><td><b>direct-mapped-cache-controller</b></td><td></td><td style='color:#27ae60'><b>5</b></td><td style='color:#31a24c'>0/5</td><td style='color:#27ae60'><b>4</b></td><td>yes</td><td>yes</td><td style='color:#27ae60'>5</td><td style='color:#27ae60'>5</td></tr><tr data-i='12' class=''><td><b>pipeline-forwarding-unit</b></td><td></td><td style='color:#27ae60'><b>5</b></td><td style='color:#31a24c'>0/5</td><td style='color:#27ae60'><b>4</b></td><td>yes</td><td>yes</td><td style='color:#27ae60'>5</td><td style='color:#27ae60'>5</td></tr><tr data-i='13' class='flag'><td><b>axi-lite-register-slave</b></td><td></td><td style='color:#27ae60'><b>4</b></td><td style='color:#31a24c'>0/5</td><td style='color:#f39c12'><b>3</b></td><td>yes</td><td>yes</td><td style='color:#27ae60'>5</td><td style='color:#27ae60'>5</td></tr><tr data-i='14' class='flag'><td><b>memory-mapped-interrupt-controller</b></td><td></td><td style='color:#27ae60'><b>5</b></td><td style='color:#31a24c'>0/5</td><td style='color:#f39c12'><b>3</b></td><td>yes</td><td>yes</td><td style='color:#27ae60'>5</td><td style='color:#27ae60'>5</td></tr></tbody></table></div><div class='modal' id='m'><div class='box'><div class='mh'><h2 id='mt'></h2><button class='x' onclick="document.getElementById('m').classList.remove('open')">&times;</button></div><div class='mc' id='mb'></div></div></div><div style='display:none'><div id='d0' style='display:none'><div class='sec'><div class='st'>Prompt</div><pre>Make the bounded cache at `/app/repo/cache` correctly combine two eviction mechanisms that currently don&#x27;t interact at all: least-recently-used (LRU) capacity eviction, and per-entry time-to-live (TTL) expiry. Read `/app/TASK_CONTRACT.md` for the exact API and guarantees before changing anything; `/app/reproduce.py` demonstrates a stale read and an incorrect eviction with the current implementation.
+
+## Interface
+
+`cache.TTLCache(max_size, clock=None)` implements `put(key, value, ttl)` and `get(key)` (raises `KeyError` on a missing or expired key) and `__len__()` (the number of currently live, non-expired entries). `ttl` is a number of clock units until that entry expires, measured from the moment of that `put()` call. `clock` is a zero-argument callable returning the current time as a number; it defaults to a real wall clock, but the verifier always supplies its own fake, caller-controlled one, so nothing about real elapsed time is ever graded.
+
+## Required guarantees
+
+1. `get(key)` must raise `KeyError` for a key that was never put, was evicted for capacity, or whose `ttl` has elapsed (checked against the clock at the moment of that `get()` call) since it was put or last overwritten -- never return a stale value.
+2. A successful `get(key)` counts as a use: immediately afterward, that key must be the least likely to be evicted next of all currently live keys, exactly as if it had just been `put` again.
+3. When inserting a new key would exceed `max_size` live entries, eviction must free room from already-expired entries first; only if that is still not enough may it evict the least-recently-used *live* entry (by the recency order in guarantee 2). An expired entry must never be preferred for survival over a live one.
+4. Overwriting an existing key via `put()` resets both its value and its expiry baseline to the clock&#x27;s value at that call, and counts as the most-recent use of that key.
+5. `len(cache)` always reports the number of currently live entries -- an expired entry must never be counted, whether or not it has been physically purged yet.
+
+## What&#x27;s out of scope
+
+Negative or zero `ttl`, concurrent access from multiple threads, and any persistence across process restarts -- this is a single-threaded, in-memory cache.
+
+## Deliverable
+
+Copy the complete `cache` package to `/app/submission/cache`. The verifier imports only that path, as an unprivileged user, in a separate container from the one you worked in. It does not read `/app/repo` and installs nothing beyond the Python standard library.
+
+## Verification
+
+Five independent, weighted criteria, each run as a scripted sequence of `put`/`get`/clock-advance operations against the actual submitted `TTLCache` object, with a verifier-controlled fake clock (never real time):
+
+1. **Basic correctness.** `put`/`get`/overwrite with no expiry or capacity pressure. (15%)
+2. **TTL expiry is enforced.** A `get()` on an expired key must miss, and `len()` must exclude it, even before anything has triggered a physical purge. (25%)
+3. **LRU recency follows reads, not just writes.** A key read since its last write must survive an eviction that would otherwise have claimed it. (25%)
+4. **Expired entries are reclaimed before live ones.** Inserting past capacity must never evict a live entry while an already-expired one still occupies a slot. (20%)
+5. **A longer mixed sequence** combining expiry, recency, and eviction, checked at each step. (15%)
+
+A full pass requires all five; per-criterion outcomes are retained separately for diagnosis. Only the Python standard library is available at verification time; no network access.
+</pre></div><div class='sec'><div class='st'>Prompt Quality</div><div class='rat'>Clear contract, interface and guarantees; fix is well specified.</div></div><div class='sec'><div class='st'>Rubric Accuracy</div><div class='rat'>Rubrics are short labels mapping one-to-one to fixtures with weights; evaluable via the tests, positive weights.</div></div><div class='sec'><div class='st'>Test Correctness</div><div class="issue"><div class="ih"><span class="tag">other</span><b>fixtures/ttl_expiry.json + mixed.json + expired_slot_reclaim.json</b> </div><div class="ir">Guarantee 5 (len excludes expired entries before physical purge) is not actually tested: every expect_len follows a get/put that can purge the expired entry, so a lazy impl that counts raw store size passes.</div></div><div class="issue"><div class="ih"><span class="tag">other</span><b>all fixtures</b> </div><div class="ir">Guarantee 4 (overwrite resets expiry baseline and recency) is never tested; no overwrite-after-advance fixture and no ttl boundary (elapsed == ttl) case.</div></div><div class="issue"><div class="ih"><span class="tag">other</span><b>runner.py / grade.py</b> </div><div class="ir">Runner runs submission code in-process and trusts an out-file in a world-writable workdir (777) with path passed on argv; submission could write {ok:true} and exit 0 to bypass. Weak isolation.</div></div><div class='rat'>Fixtures use correct expected values and the fake clock is verifier-owned, but coverage is thin: overwrite semantics, len-before-purge and boundary are unchecked, and result file trust is bypassable.</div></div><div class='sec'><div class='st'>Coverage &amp; Balance</div><div class='rat'>Weights sensible but guarantees 4 and 5 gaps allow wrong implementations to pass; reward requires all five.</div></div><div class='sec'><div class='st'>Task Adequacy</div><div class='rat'>Starter code, contract and reproduce script are provided.</div></div></div><div id='d1' style='display:none'><div class='sec'><div class='st'>Prompt</div><pre>Fix the token-bucket rate limiter at `/app/repo/ratelimit` so its refill math is actually correct: it must never grant more tokens than its capacity, and it must never silently lose fractional refill time across repeated small calls. Read `/app/TASK_CONTRACT.md` for the exact API and guarantees before changing anything; `/app/reproduce.py` demonstrates both problems live, with a fake, caller-controlled clock so nothing about real elapsed time is involved.
+
+## Interface
+
+`ratelimit.TokenBucket(capacity, refill_rate, clock=None)` implements `try_acquire(cost=1) -&gt; bool` (deducts `cost` tokens and returns `True` if available, otherwise returns `False` and leaves the balance untouched) and `available() -&gt; float` (the current token count, without consuming any). `refill_rate` is tokens granted per clock unit, continuously, not in discrete per-call increments. `clock` is a zero-argument callable returning the current time as a number; the verifier always supplies its own fake, caller-controlled one, so nothing about real elapsed time is ever graded.
+
+## Required guarantees
+
+1. The token count must never exceed `capacity`, no matter how long the bucket sits idle before the next call -- refill must clamp, not accumulate without bound.
+2. Refill must account for the *exact* elapsed clock time since the last refill, continuously. Calling `available()` or `try_acquire()` repeatedly across many small advances must credit the same total as one single advance covering the same total elapsed time -- no fractional remainder may be silently dropped at any individual call.
+3. `try_acquire(cost)` succeeds, deducting exactly `cost`, if and only if the refilled balance is `&gt;= cost`. On failure, the stored balance must be exactly what refilling alone would have produced -- never partially deducted, and never negative.
+4. Two calls at the same clock instant (zero elapsed time) must refill by exactly zero additional tokens.
+5. `available()` must never itself grant or consume tokens beyond what elapsed time actually entitles -- it reports the balance a subsequent `try_acquire()` at that same instant would see.
+
+## What&#x27;s out of scope
+
+Negative `refill_rate` or `capacity`, multi-threaded access, and any persistence across process restarts.
+
+## Deliverable
+
+Copy the complete `ratelimit` package to `/app/submission/ratelimit`. The verifier imports only that path, as an unprivileged user, in a separate container from the one you worked in. It does not read `/app/repo` and installs nothing beyond the Python standard library.
+
+## Verification
+
+Five independent, weighted criteria, each a scripted sequence of `try_acquire`/`available`/clock-advance operations against the actual submitted `TokenBucket` object, driven by a fake clock the submission cannot see or control:
+
+1. **Basic correctness.** Plain consumption and exhaustion with no idle periods or fractional advances. (15%)
+2. **Capacity clamp.** An idle period longer than it takes to refill to capacity must not grant more than `capacity` tokens. (25%)
+3. **Fractional refill.** Several small, non-integer clock advances must sum to the same credited total as one equivalent large advance. (25%)
+4. **Exact accounting.** Boundary-exact `try_acquire` calls (balance exactly equal to cost) and failed calls (balance must stay untouched beyond refill) checked precisely. (20%)
+5. **A longer mixed sequence** combining idle bursts, fractional advances, and exact exhaustion, checked at every step. (15%)
+
+A full pass requires all five; per-criterion outcomes are retained separately for diagnosis. Only the Python standard library is available at verification time; no network access.
+</pre></div><div class='sec'><div class='st'>Prompt Quality</div><div class='rat'>Clear contract, repro script, API and deliverable path; small bug fix.</div></div><div class='sec'><div class='st'>Rubric Accuracy</div><div class='rat'>Five weighted criteria map one-to-one to fixtures with correct signs; terse but backed by deterministic tests.</div></div><div class='sec'><div class='st'>Test Correctness</div><div class='rat'>Grader copies runner/fixtures from its own tests dir and runs the submission as unprivileged user with a trusted fake clock; no bypass of measurement found. Fixtures are correct and valid against the contract; tolerance 1e-6 is fine. Fixtures are fairly small/weak (see coverage).</div></div><div class='sec'><div class='st'>Coverage &amp; Balance</div><div class='rat'>Core outcomes covered; mixed fixture is short and has few fractional steps, so some wrong implementations (e.g. rounding or resetting last_refill incorrectly on non-unit rates) could pass. Weights sensible.</div></div><div class='sec'><div class='st'>Task Adequacy</div><div class='rat'>Starter code, contract and reproduce script are provided; stdlib only.</div></div></div><div id='d2' style='display:none'><div class='sec'><div class='st'>Prompt</div><pre>Fix the fixed-capacity ring buffer at `/app/repo/ringbuffer` so it correctly distinguishes &quot;full&quot; from &quot;empty&quot;: the current implementation tracks only head/tail indices with no count, so `push` never actually checks capacity and silently overwrites unread data once the buffer wraps around. Read `/app/TASK_CONTRACT.md` for the exact API and guarantees before changing anything; `/app/reproduce.py` demonstrates the data corruption live.
+
+## Interface
+
+`ringbuffer.RingBuffer(capacity)` implements `push(item) -&gt; bool` (returns `False` and leaves the buffer unchanged if full, otherwise stores `item` and returns `True`), `pop()` (raises `ringbuffer.Empty` if empty, otherwise removes and returns the oldest unread item), and `__len__()` (the exact number of currently held, unread items). This models a single-producer/single-consumer queue, but grading never uses real threads or timing -- every scenario is a scripted, single-threaded sequence of `push`/`pop` calls in a precise, pre-determined order, which is what a correct SPSC implementation must handle regardless of which thread actually calls what.
+
+## Required guarantees
+
+1. `push` on a full buffer (`len(buffer) == capacity`) must return `False` and must not alter the buffer&#x27;s contents at all -- the oldest unread item must never be silently overwritten.
+2. `pop` on an empty buffer must raise `ringbuffer.Empty`, never return a stale or garbage value.
+3. Items come out in exactly the order they were pushed (FIFO), with no duplication and no drops, across any sequence of interleaved pushes and pops.
+4. `len(buffer)` always reports the exact count of currently held, unread items, from `0` up to `capacity`.
+5. Correctness holds after the underlying storage has wrapped around many times -- a long sequence whose total push count far exceeds `capacity` must behave identically to a short one, item for item.
+
+## What&#x27;s out of scope
+
+Real multi-threaded concurrency, memory-ordering/visibility semantics, and any capacity resizing after construction -- this is single-threaded, scripted-sequence correctness only.
+
+## Deliverable
+
+Copy the complete `ringbuffer` package to `/app/submission/ringbuffer`. The verifier imports only that path, as an unprivileged user, in a separate container from the one you worked in. It does not read `/app/repo` and installs nothing beyond the Python standard library.
+
+## Verification
+
+Five independent, weighted criteria, each a scripted sequence of `push`/`pop`/`len` checks against the actual submitted `RingBuffer` object:
+
+1. **Basic correctness.** Push and pop below capacity, no wraparound. (15%)
+2. **Full-buffer rejection.** A push on a full buffer must fail without corrupting existing data. (25%)
+3. **Empty-buffer rejection.** A pop on an empty buffer must raise, never fabricate a value. (15%)
+4. **Wraparound integrity.** Many push/pop cycles whose total count far exceeds capacity, checked for exact FIFO order throughout. (25%)
+5. **A longer mixed sequence** combining all of the above, checked at every step. (20%)
+
+A full pass requires all five; per-criterion outcomes are retained separately for diagnosis. Only the Python standard library is available at verification time; no network access.
+</pre></div><div class='sec'><div class='st'>Prompt Quality</div><div class='rat'>Clear API, guarantees, deliverable path; trivial single-file fix.</div></div><div class='sec'><div class='st'>Rubric Accuracy</div><div class='rat'>Five terse criteria map 1:1 to fixture-based tests with weights; evaluable via tests, positive signs, consistent with prompt.</div></div><div class='sec'><div class='st'>Test Correctness</div><div class='rat'>Grader stages its own runner and fixtures, runs submission unprivileged, no trust in submission-controlled measurement beyond importing the class (a hardcoded cheat is possible but unlikely). Fixtures are small (capacities 2-4, &lt;=45 ops) but would catch the buggy original and typical wrong variants. Gaps: no capacity-1, no None/falsy items, no len checks on every step in basic/wraparound.</div></div><div class='sec'><div class='st'>Coverage &amp; Balance</div><div class='rat'>All five guarantees covered; weights favor full-rejection and wraparound. Fixtures modest in scale.</div></div><div class='sec'><div class='st'>Task Adequacy</div><div class='rat'>Repo, contract and reproduce script provided; stdlib only.</div></div></div><div id='d3' style='display:none'><div class='sec'><div class='st'>Prompt</div><pre>Fix the incrementally-built DAG at `/app/repo/toposort` so it actually detects cycles of any length and keeps its topological order valid as edges are added over time. The current implementation only rejects a direct two-node cycle (`add_edge(b, a)` right after `add_edge(a, b)`) -- any longer cycle (`a-&gt;b-&gt;c-&gt;a`) or a self-loop slips through uncaught -- and `order()` just returns node-insertion order, which goes stale the moment an edge is added between two nodes that weren&#x27;t inserted in a compatible order. Read `/app/TASK_CONTRACT.md` before changing anything; `/app/reproduce.py` demonstrates both bugs live.
+
+## Interface
+
+`toposort.DAG()` implements `add_node(node)` (idempotent), `add_edge(u, v) -&gt; bool` (adds the directed edge and returns `True`, or rejects it and returns `False` if it would create a cycle -- including a self-loop -- leaving the graph completely unchanged on rejection), and `order() -&gt; list` (a topological order of every node added so far, consistent with every edge currently in the graph). Any one valid topological order is acceptable; grading checks the *property*, not one specific tie-break.
+
+## Required guarantees
+
+1. `add_edge(u, v)` must reject any edge that would create a cycle of *any* length through existing edges, not just an immediate reverse edge.
+2. A self-loop (`add_edge(n, n)`) is always rejected as a one-node cycle.
+3. A rejected `add_edge` call leaves the graph completely unchanged -- no partial or phantom edge.
+4. `order()` always returns a permutation of exactly the nodes added so far (via `add_node` or implicitly via `add_edge`), with no omissions or duplicates.
+5. `order()` is consistent with *every* edge currently in the graph: for every edge `u -&gt; v`, `u` appears strictly before `v` in the returned order, including edges added after nodes were inserted in an incompatible order, and including edges added since the last call to `order()`.
+
+## What&#x27;s out of scope
+
+Edge weights, removing nodes or edges once added, and any specific tie-break among nodes with no remaining ordering constraint between them -- more than one valid topological order may exist, and any of them is acceptable.
+
+## Deliverable
+
+Copy the complete `toposort` package to `/app/submission/toposort`. The verifier imports only that path, as an unprivileged user, in a separate container from the one you worked in. It does not read `/app/repo` and installs nothing beyond the Python standard library.
+
+## Verification
+
+Five independent, weighted criteria, each a scripted sequence of `add_node`/`add_edge`/`order()` checks against the actual submitted `DAG` object, validating the *properties* above rather than one exact expected list:
+
+1. **Basic correctness.** A simple chain built in topologically-compatible order. (15%)
+2. **Longer-cycle detection.** A 3-edge cycle built through intermediate nodes must be rejected on its closing edge. (25%)
+3. **Order consistency under reordering.** Nodes inserted in one order, then an edge added that requires the opposite relative order. (25%)
+4. **Rejection leaves the graph unchanged**, checked via both a longer cycle and a self-loop. (20%)
+5. **A longer mixed sequence** combining all of the above, checked at multiple points. (15%)
+
+A full pass requires all five; per-criterion outcomes are retained separately for diagnosis. Only the Python standard library is available at verification time; no network access.
+</pre></div><div class='sec'><div class='st'>Prompt Quality</div><div class='rat'>Clear interface and guarantees.</div></div><div class='sec'><div class='st'>Rubric Accuracy</div><div class='rat'>Rubrics are terse one-liners but map to fixtures; evaluable via tests.</div></div><div class='sec'><div class='st'>Test Correctness</div><div class="issue"><div class="ih"><span class="tag">other</span><b>?</b> </div><div class="ir">Submission code is imported in-process by the runner, which writes the result JSON to a world-writable workdir; submission can write ok:true/forge results or read fixtures. No isolation of measurement from submission.</div></div><div class="issue"><div class="ih"><span class="tag">other</span><b>?</b> </div><div class="ir">Unchanged-graph check only uses order() against runner&#x27;s known edges; a phantom edge left by a rejected add_edge is never detected (no later edge that a phantom would wrongly reject/reorder, no add_edge of a legit edge conflicting).</div></div><div class="issue"><div class="ih"><span class="tag">other</span><b>?</b> </div><div class="ir">Runner adds both endpoints to known_nodes even on rejected edges, an unstated assumption; no fixture rejects an edge involving a new node, and duplicate edges/idempotent add_node are untested.</div></div><div class='rat'>Property-based order check is good, but grader runs submission in-process and trusts a result file it can write; reject-unchanged fixture is weak against phantom edges.</div></div><div class='sec'><div class='st'>Coverage &amp; Balance</div><div class='rat'>Core outcomes covered with small fixtures; unchanged-graph guarantee under-tested.</div></div><div class='sec'><div class='st'>Task Adequacy</div><div class='rat'>Repo, contract and reproduce script provided.</div></div></div><div id='d4' style='display:none'><div class='sec'><div class='st'>Prompt</div><pre>Fix the streaming JSON parser at `/app/repo/jsonstream` so it tracks whether it&#x27;s currently inside a string literal while scanning for a complete top-level value. The current implementation counts `{`/`[`/`}`/`]` characters anywhere in the buffered text to find where a value ends -- including ones that appear literally inside a string value -- so a value like `{&quot;shape&quot;: &quot;{curly}&quot;}` gets cut off (or fails to parse) long before its real end. Read `/app/TASK_CONTRACT.md` before changing anything; `/app/reproduce.py` demonstrates the corruption live.
+
+## Interface
+
+`jsonstream.StreamingParser()` implements `feed(chunk: str) -&gt; list`, which appends `chunk` to an internal buffer and returns a list (possibly empty) of every complete top-level JSON value (object or array) that became fully available as a result of this call, each already parsed into the equivalent Python object (via the standard `json` module&#x27;s own value semantics). Values are returned in the order they completed; a value that was already complete before this call was never returned again. Whitespace between top-level values is ignored.
+
+## Required guarantees
+
+1. A single JSON value may be split across any number of `feed()` calls, down to one character per call, and must still be parsed correctly and returned exactly once, as soon as it becomes complete.
+2. `{`, `}`, `[`, and `]` characters that appear inside a string value must never be mistaken for structural depth changes -- `{&quot;shape&quot;: &quot;{curly}&quot;}` is one complete object, not evidence of a premature or malformed end.
+3. An escaped quote (`\&quot;`) inside a string must never be mistaken for that string&#x27;s closing quote.
+4. A literal backslash immediately before a closing quote (`\\&quot;`, an escaped backslash followed by a real closing quote) must be told apart from an escaped quote (`\&quot;`) -- escape parity must be tracked correctly, not just &quot;does a `\` appear before this `&quot;`&quot;.
+5. Multiple complete top-level values arriving back-to-back in the stream, including when two consecutive values are split across the same `feed()` call boundary, must each be returned separately, in order, with none dropped or merged.
+
+## What&#x27;s out of scope
+
+Top-level scalar values (a bare number, string, or literal with no enclosing `{}`/`[]`), malformed JSON recovery, and any specific chunk size -- chunks may arrive at any granularity, including one character at a time.
+
+## Deliverable
+
+Copy the complete `jsonstream` package to `/app/submission/jsonstream`. The verifier imports only that path, as an unprivileged user, in a separate container from the one you worked in. It does not read `/app/repo` and installs nothing beyond the Python standard library.
+
+## Verification
+
+Five independent, weighted criteria, each a scripted sequence of `feed()` calls against the actual submitted `StreamingParser` object, checking the exact values returned at each call:
+
+1. **Basic correctness.** A few simple values with no special characters, fed in a handful of chunks. (15%)
+2. **Braces inside string values.** The core bug: structural characters appearing inside a string must not corrupt depth tracking. (25%)
+3. **Byte-at-a-time streaming.** A value containing braces inside a string, fed one character per call. (20%)
+4. **Escape handling.** Escaped quotes and escaped backslashes adjacent to brace characters inside a string, including the `\\&quot;` vs `\&quot;` distinction. (25%)
+5. **A longer mixed sequence** combining all of the above, with several back-to-back values and arbitrary chunk boundaries. (15%)
+
+A full pass requires all five; per-criterion outcomes are retained separately for diagnosis. Only the Python standard library is available at verification time; no network access.
+</pre></div><div class='sec'><div class='st'>Prompt Quality</div><div class='rat'>Clear bug, interface and guarantees.</div></div><div class='sec'><div class='st'>Rubric Accuracy</div><div class='rat'>Rubrics are terse labels that mirror the test fixtures; acceptable.</div></div><div class='sec'><div class='st'>Test Correctness</div><div class="issue"><div class="ih"><span class="tag">other</span><b>?</b> </div><div class="ir">Comparison runs inside the same process as the submitted code, and the result file is written to a world-writable workdir by the unprivileged process. Submission code can use atexit or os._exit to write {&quot;ok&quot;:true} to the known out path or monkeypatch equality, so the grader trusts submission-controlled state for measurement.</div></div><div class="issue"><div class="ih"><span class="tag">other</span><b>?</b> </div><div class="ir">Weak fixtures: the one-char-at-a-time test has no escapes; no case splits a backslash or escape pair across a chunk boundary, no nested containers, no top-level array, and no case where a value completes mid-chunk with the next one starting partially in the same chunk.</div></div><div class='rat'>Grader runs submission in-process and trusts a submission-writable result file (bypassable); fixtures are thin and miss chunk-boundary escapes and nesting.</div></div><div class='sec'><div class='st'>Coverage &amp; Balance</div><div class='rat'>Weights sensible; coverage of the stated guarantees is shallow, one fixture each.</div></div><div class='sec'><div class='st'>Task Adequacy</div><div class='rat'>Repo, contract and reproducer provided.</div></div></div><div id='d5' style='display:none'><div class='sec'><div class='st'>Prompt</div><pre>Fix the programmable-modulus counter at `/app/repo/modcounter.v`: it counts one value too many before wrapping (`0..modulus` instead of `0..modulus-1`, so a modulus of 5 produces 6 distinct values), and loading a new modulus does not reset the current count, so a stale count can sit outside the valid range of the new modulus. Read `/app/TASK_CONTRACT.md` for the exact port list and timing before changing anything; `/app/reproduce.py` demonstrates both bugs live in simulation.
+
+## Interface
+
+```
+module modcounter #(parameter WIDTH = 8) (
+    input  wire             clk,
+    input  wire             rst_n,
+    input  wire             load,
+    input  wire [WIDTH-1:0] mod_in,
+    input  wire             en,
+    output reg  [WIDTH-1:0] count,
+    output reg              overflow
+);
+```
+
+All signals are synchronous to `clk`, registered, active on the rising edge; `rst_n` is active-low and synchronous. `modulus` (the value most recently loaded via `load`/`mod_in`) is always `&gt;= 1` in graded inputs.
+
+## Required guarantees
+
+1. While enabled (`en=1`, `load=0`) and not wrapping, `count` increments by exactly 1 each cycle.
+2. `count` must cycle through exactly `modulus` distinct values, `0` to `modulus - 1`, before wrapping back to `0` -- never `modulus` values, never `modulus - 2`.
+3. `overflow` pulses high for exactly the one cycle on which `count` wraps from `modulus - 1` back to `0`, and is low every other cycle.
+4. Asserting `load` (regardless of `en`) loads `mod_in` as the new modulus **and** resets `count` to `0` in that same clock edge -- the counter never continues from a stale count under a new modulus.
+5. While `en=0` and `load=0`, `count` and `overflow` both hold their current values exactly -- counting pauses completely and resumes from where it left off once `en` returns high.
+
+## What&#x27;s out of scope
+
+A modulus of `0`, changing `WIDTH` at runtime, and any asynchronous or combinational outputs -- `count` and `overflow` are both registered.
+
+## Deliverable
+
+Copy the complete `modcounter.v` file to `/app/submission/modcounter.v`. The verifier compiles and simulates only that file, in Icarus Verilog, in a separate container from the one you worked in. It does not read `/app/repo`.
+
+## Verification
+
+Five independent, weighted criteria, each a cocotb test running the compiled module cycle-by-cycle against an independent Python reference model, asserting `count` and `overflow` agree every single cycle:
+
+1. **Basic counting.** A fixed modulus, counted through several full wraps. (15%)
+2. **Load resets count.** A modulus change mid-count, checked that the stale count is discarded. (25%)
+3. **Overflow timing.** The overflow pulse&#x27;s exact cycle, across several wraps of different moduli. (20%)
+4. **Pause and resume.** `en` deasserted for several cycles, then reasserted, checked that state holds exactly and counting resumes correctly. (20%)
+5. **A longer randomized mixed sequence** combining load/enable/pause transitions, checked every cycle. (20%)
+
+A full pass requires all five; per-criterion outcomes are retained separately for diagnosis. Only Icarus Verilog and cocotb are available at verification time; no network access.
+</pre></div><div class='sec'><div class='st'>Prompt Quality</div><div class='rat'>Clear bug description, interface and guarantees. Minor tension: guarantee 3 says overflow is low every other cycle, while guarantee 5 says overflow holds during pause.</div></div><div class='sec'><div class='st'>Rubric Accuracy</div><div class='rat'>Rubrics are bare test names mapped to the five cocotb tests, with positive weights summing to 100. They are evaluable via the tests.</div></div><div class='sec'><div class='st'>Test Correctness</div><div class="issue"><div class="ih"><span class="tag">incorrect_assertion</span><b>test_pause_resume</b> </div><div class="ir">RefModel.step returns overflow=0 whenever en=0, but guarantee 5 says overflow holds its value during pause. The test pauses at count 3, so overflow is already 0 and the conflict is never exercised. A pause immediately after a wrap cycle is untested. Also no test exercises rst_n after the initial reset, and no deterministic test loads with en=1.</div></div><div class='rat'>Cycle-by-cycle comparison against a Python reference model covers the main bugs. The grader copies Makefile and tests from /tests and compiles only the submission .v, so measurement is not submission-controlled; a minor residual is that the submission Verilog runs in a world-writable workdir, but cocotb rewrites results.xml. Gaps: overflow-hold-on-pause ambiguity untested, reset untested after the first reset.</div></div><div class='sec'><div class='st'>Coverage &amp; Balance</div><div class='rat'>Weights favor load reset (25%) and the other core behaviors; all signs positive. The random test adds some coverage of load combined with en.</div></div><div class='sec'><div class='st'>Task Adequacy</div><div class='rat'>Starter RTL, contract, reproduce script, iverilog and cocotb are all available in the environment.</div></div></div><div id='d6' style='display:none'><div class='sec'><div class='st'>Prompt</div><pre>Fix the UART transmitter at `/app/repo/uart_tx.v`: its bit-duration counter reloads one cycle too late (`clk_count == CLKS_PER_BIT` instead of `clk_count == CLKS_PER_BIT - 1`), so every bit -- the start bit, all 8 data bits, and the stop bit -- is held for `CLKS_PER_BIT + 1` cycles instead of `CLKS_PER_BIT`. The timing drifts by one extra cycle per bit, so by partway through a frame the line is no longer where a receiver sampling at the correct bit rate expects it. Read `/app/TASK_CONTRACT.md` for the exact port list and frame format before changing anything; `/app/reproduce.py` demonstrates the drift live.
+
+## Interface
+
+```
+module uart_tx #(parameter CLKS_PER_BIT = 4) (
+    input  wire       clk,
+    input  wire       rst_n,
+    input  wire       tx_start,
+    input  wire [7:0] tx_data,
+    output reg        tx_busy,
+    output reg        tx,
+    output reg        tx_done
+);
+```
+
+`CLKS_PER_BIT` is fixed at `4` for grading -- do not change it. Pulsing `tx_start` high for exactly one cycle while `tx_busy` is low begins transmitting `tx_data`. The frame is: one start bit (`0`), eight data bits (LSB first), one stop bit (`1`), each held for exactly `CLKS_PER_BIT` clock cycles. `tx` idles high.
+
+## Required guarantees
+
+1. Each of the ten bits in a frame (start, 8 data, stop) is held on the `tx` line for exactly `CLKS_PER_BIT` clock cycles -- no drift, no cumulative error across the frame.
+2. Data bits are transmitted least-significant-bit first.
+3. `tx_busy` is high for the entire frame (from the cycle transmission begins through the last cycle of the stop bit) and low otherwise.
+4. `tx_done` pulses high for exactly one cycle, on the last cycle of the stop bit, and is low every other cycle.
+5. A new `tx_start` pulse issued the cycle immediately after `tx_busy` drops begins a new frame with correct timing, identical to the first -- back-to-back frames never corrupt each other&#x27;s timing.
+
+## What&#x27;s out of scope
+
+Parity bits, configurable baud/frame format, flow control, and any value of `CLKS_PER_BIT` other than its fixed default of `4`.
+
+## Deliverable
+
+Copy the complete `uart_tx.v` file to `/app/submission/uart_tx.v`. The verifier compiles and simulates only that file, in Icarus Verilog, in a separate container from the one you worked in. It does not read `/app/repo`.
+
+## Verification
+
+Five independent, weighted criteria, each a cocotb test driving the compiled module and sampling `tx` at the exact expected midpoint of every bit slot, against an independently computed expected bit sequence:
+
+1. **Single-byte bit timing.** One byte, every bit sampled at its exact expected cycle. (20%)
+2. **`tx_busy`/`tx_done` cycle-exact timing.** The total frame length and the exact cycle `tx_done` pulses on. (25%)
+3. **Back-to-back frames.** Several different bytes sent one after another, each decoded correctly. (20%)
+4. **Edge-case byte patterns.** `0x00`, `0xFF`, and alternating-bit patterns. (15%)
+5. **A longer randomized mixed sequence** of back-to-back bytes with idle gaps, each decoded and checked. (20%)
+
+A full pass requires all five; per-criterion outcomes are retained separately for diagnosis. Only Icarus Verilog and cocotb are available at verification time; no network access.
+</pre></div><div class='sec'><div class='st'>Prompt Quality</div><div class='rat'>Prompt names the exact bug and fix, interface and deliverable; very clear, nearly a one-line fix.</div></div><div class='sec'><div class='st'>Rubric Accuracy</div><div class='rat'>Rubrics are test-name items with weights matching the prompt; no sign errors.</div></div><div class='sec'><div class='st'>Test Correctness</div><div class="issue"><div class="ih"><span class="tag">other</span><b>test_back_to_back_frames / test_mixed_random</b> </div><div class="ir">send_byte always waits FRAME_CYCLES+6 cycles, so tx_start is never issued the cycle immediately after tx_busy drops; guarantee 5 (immediate back-to-back) is untested.</div></div><div class="issue"><div class="ih"><span class="tag">other</span><b>test_busy_done_timing</b> </div><div class="ir">Only the first tx_done is recorded; repeated/extra tx_done pulses and tx_done in other cycles are not checked. Idle-high tx, busy low when idle, and busy rising at the start are not checked.</div></div><div class="issue"><div class="ih"><span class="tag">other</span><b>test_single_byte_timing (all bit tests)</b> </div><div class="ir">Samples tx only once at mid-slot, so a bit width of 3 or 5 with a compensating offset, or a one-cycle start-latency shift, can pass; exact hold duration per bit is not verified.</div></div><div class='rat'>Grader is sound: it copies its own Makefile and test from /tests and only compiles /app/submission/uart_tx.v, so the submission controls no measurement. But the sampling is coarse and some guarantees are not checked (immediate back-to-back start, single-cycle tx_done, idle behaviour).</div></div><div class='sec'><div class='st'>Coverage &amp; Balance</div><div class='rat'>Five tests largely overlap, since each only checks midpoint-sampled bits; weights are reasonable but guarantee 5 and the strictness of 3/4 are weakly covered.</div></div><div class='sec'><div class='st'>Task Adequacy</div><div class='rat'>Repo file, contract, reproduce script and the toolchain are present.</div></div></div><div id='d7' style='display:none'><div class='sec'><div class='st'>Prompt</div><pre>Fix the SPI master at `/app/repo/spi_master.v`: its per-half-bit-period counter reloads one cycle too late (`half_count == CLKS_PER_HALF_BIT` instead of `CLKS_PER_HALF_BIT - 1`), so every `sck` half-period lasts one extra system-clock cycle. The drift accumulates across the 16 edges of an 8-bit transfer, so `sck`, `mosi`, and the cycle on which `miso` is sampled all drift away from the fixed `CLKS_PER_HALF_BIT` timing a receiver expects. Read `/app/TASK_CONTRACT.md` for the exact port list and protocol before changing anything; `/app/reproduce.py` demonstrates the drift live.
+
+## Interface
+
+```
+module spi_master #(parameter WIDTH = 8, parameter CLKS_PER_HALF_BIT = 4) (
+    input  wire             clk,
+    input  wire             rst_n,
+    input  wire             start,
+    input  wire [WIDTH-1:0] tx_data,
+    input  wire             miso,
+    output reg              busy,
+    output reg              done,
+    output reg  [WIDTH-1:0] rx_data,
+    output reg              sck,
+    output reg              mosi
+);
+```
+
+`CLKS_PER_HALF_BIT` is fixed at `4` for grading -- do not change it. This is a fixed-mode (SPI Mode 0) master: `sck` idles low, data is transmitted and sampled MSB-first, `mosi` is valid before each rising edge, and `miso` is sampled on each rising edge of `sck`. Pulsing `start` high for one cycle while `busy` is low begins an 8-bit transfer of `tx_data`.
+
+## Required guarantees
+
+1. Each of the 16 `sck` edges in an 8-bit transfer (8 rising, 8 falling, strictly alternating) occurs exactly `CLKS_PER_HALF_BIT` cycles after the previous one -- no drift, no cumulative error across the transfer.
+2. `mosi` presents bit `7-k` of `tx_data` (MSB-first) and is valid starting before the rising edge that corresponds to bit `k`, through just before the next rising edge.
+3. `miso` is sampled on every rising edge of `sck`, in order, assembling into `rx_data` MSB-first (the first bit sampled becomes the most significant bit of `rx_data`).
+4. `busy` is high for the entire transfer (from the cycle `start` is accepted through the last falling edge) and low otherwise.
+5. `done` pulses high for exactly one cycle, on the same cycle `busy` drops, once all 16 edges have occurred.
+
+## What&#x27;s out of scope
+
+Configurable CPOL/CPHA (this module is fixed to SPI Mode 0), any `WIDTH` or `CLKS_PER_HALF_BIT` other than their fixed defaults of `8` and `4`, and multiple simultaneous chip-selects.
+
+## Deliverable
+
+Copy the complete `spi_master.v` file to `/app/submission/spi_master.v`. The verifier compiles and simulates only that file, in Icarus Verilog, in a separate container from the one you worked in. It does not read `/app/repo`.
+
+## Verification
+
+Five independent, weighted criteria, each a cocotb test running the compiled module cycle-by-cycle against an independent Python reference model (driving `miso` with a known bit sequence and checking `sck`/`mosi`/`busy`/`done`/`rx_data` every single cycle):
+
+1. **Single-byte transfer timing.** One transfer, every `sck`/`mosi` transition checked at its exact expected cycle. (20%)
+2. **`rx_data` sampling correctness.** `miso` driven with several different bit patterns, checked that `rx_data` assembles correctly. (25%)
+3. **`busy`/`done` cycle-exact timing.** The total transfer length and the exact cycle `done` pulses on. (20%)
+4. **Back-to-back transfers.** Several transfers issued one after another, each checked independently. (15%)
+5. **A longer randomized mixed sequence** of transfers with varying `tx_data`/`miso` patterns, checked every cycle. (20%)
+
+A full pass requires all five; per-criterion outcomes are retained separately for diagnosis. Only Icarus Verilog and cocotb are available at verification time; no network access.
+</pre></div><div class='sec'><div class='st'>Prompt Quality</div><div class='rat'>Bug, fix location, protocol, interface and deliverable are explicit; contract and reproduce script available.</div></div><div class='sec'><div class='st'>Rubric Accuracy</div><div class='rat'>Rubrics are test names mapped 1:1 to cocotb tests with positive weights; acceptable as test-backed criteria.</div></div><div class='sec'><div class='st'>Test Correctness</div><div class="issue"><div class="ih"><span class="tag">other</span><b>test_single_transfer_timing / test_busy_done_timing</b> </div><div class="ir">All five tests run the same lockstep full-state compare via do_transfer, so any timing bug fails all; tests 1 and 3 use constant miso (all 0 / all 1) so rx sampling is weakly exercised there, and the per-test split does not isolate the described requirements.</div></div><div class="issue"><div class="ih"><span class="tag">other</span><b>test_back_to_back_transfers</b> </div><div class="ir">Not truly back-to-back: each transfer is followed by 4 idle margin cycles before the next start, so immediate restart on the done cycle is untested; start-while-busy, mid-transfer reset and non-idle start edge cases are never exercised.</div></div><div class='rat'>Grader copies Makefile/tests from trusted tests dir and compiles only the submission; no bypass found. Reference model is independent and cycle-exact, and a one-cycle-late counter would fail. Gaps are only edge-case coverage.</div></div><div class='sec'><div class='st'>Coverage &amp; Balance</div><div class='rat'>Core guarantees 1-5 are covered via full-state lockstep comparison; the five tests heavily overlap, but weights are positive and reasonable.</div></div><div class='sec'><div class='st'>Task Adequacy</div><div class='rat'>Starter RTL, contract, reproduce script and iverilog/cocotb are provided.</div></div></div><div id='d8' style='display:none'><div class='sec'><div class='st'>Prompt</div><pre>Fix the PWM generator at `/app/repo/pwm_gen.v` so a change to `duty` mid-period never glitches the current period&#x27;s waveform. The current implementation compares the counter against the live `duty` input directly, so a write to `duty` takes effect on the very next clock edge, wherever the counter happens to be -- it must instead be latched and only take effect starting at the next period boundary, like any properly synchronized control register. Read `/app/TASK_CONTRACT.md` before changing anything; `/app/reproduce.py` demonstrates the glitch live.
+
+## Interface
+
+```
+module pwm_gen #(parameter WIDTH = 8) (
+    input  wire             clk,
+    input  wire             rst_n,
+    input  wire [WIDTH-1:0] period,
+    input  wire [WIDTH-1:0] duty,
+    output reg              pwm_out
+);
+```
+
+An internal counter counts `0` to `period - 1` and wraps. `pwm_out` is high while the counter is less than the currently *applied* duty value, low otherwise. `period` is held constant for grading; only `duty` changes during a run.
+
+## Required guarantees
+
+1. With a constant `duty`, `pwm_out` is high for exactly `duty` cycles and low for exactly `period - duty` cycles, every period, indefinitely.
+2. Changing `duty` while the counter is anywhere other than `0` must not affect the waveform for the remainder of the *current* period -- the period in progress finishes exactly as it would have with the old `duty`.
+3. The new `duty` takes effect starting from the first cycle of the very next period (the cycle the counter returns to `0`), with no glitch, no extra short pulse, and no missing cycle at the boundary.
+4. If `duty` is written more than once during the same period, only the value present at the moment the period boundary is crossed takes effect -- earlier writes within that period have no residual effect.
+5. `duty = 0` (always low for the whole period) and `duty = period` (always high for the whole period) are both handled correctly as boundary cases.
+
+## What&#x27;s out of scope
+
+Changing `period` itself during a run, and any asynchronous or combinational path from `duty` to `pwm_out` -- `pwm_out` is registered.
+
+## Deliverable
+
+Copy the complete `pwm_gen.v` file to `/app/submission/pwm_gen.v`. The verifier compiles and simulates only that file, in Icarus Verilog, in a separate container from the one you worked in. It does not read `/app/repo`.
+
+## Verification
+
+Five independent, weighted criteria, each a cocotb test running the compiled module cycle-by-cycle against an independent Python reference model, asserting `pwm_out` agrees every single cycle:
+
+1. **Steady-state duty cycle.** A constant `duty`, checked across several full periods. (15%)
+2. **Mid-period change does not glitch the current period.** `duty` changed partway through a period, current period unaffected. (30%)
+3. **New duty takes effect cleanly at the next boundary.** Checked immediately after the change takes effect. (25%)
+4. **Multiple writes in one period; only the last matters.** (15%)
+5. **A longer randomized mixed sequence** of duty changes at arbitrary points, checked every cycle. (15%)
+
+A full pass requires all five; per-criterion outcomes are retained separately for diagnosis. Only Icarus Verilog and cocotb are available at verification time; no network access.
+</pre></div><div class='sec'><div class='st'>Prompt Quality</div><div class='rat'>Clear, but post-reset first-period behavior is unspecified.</div></div><div class='sec'><div class='st'>Rubric Accuracy</div><div class="issue"><div class="ih"><span class="tag">inaccurate</span><b>R1</b> test_steady_state</div><div class="ir">Reference model assumes duty_reg resets to 0 so the first period after reset is all low even with duty=4; prompt/contract never state this, so an implementation latching duty at reset fails.</div></div><div class='rat'>Rubrics are test names only; weights match prompt.</div></div><div class='sec'><div class='st'>Test Correctness</div><div class="issue"><div class="ih"><span class="tag">incorrect_assertion</span><b>test_steady_state / all tests</b> </div><div class="ir">RefModel hardcodes duty_reg=0 after reset (unspecified power-on behavior); valid implementations loading duty at reset diverge. Tests 2-4 warm up to dodge it, test 1 and 5 and 4 do not.</div></div><div class='rat'>Cycle-exact ref comparison is strong; grader copies its own tests and Makefile so no bypass. Hidden reset-state assumption is the flaw.</div></div><div class='sec'><div class='st'>Coverage &amp; Balance</div><div class='rat'>Tests 2 and 3 overlap heavily; random test covers boundaries 0 and period.</div></div><div class='sec'><div class='st'>Task Adequacy</div><div class='rat'>Solvable; reset duty_reg=0 convention must be guessed.</div></div></div><div id='d9' style='display:none'><div class='sec'><div class='st'>Prompt</div><pre>Fix the button debouncer at `/app/repo/debounce.v`: once it starts timing toward a new candidate value, it never restarts that timer if the raw input changes again before the timer finishes -- so a genuinely bouncing input can lock in a stale, premature decision instead of the debounce window restarting against each new bounce. It also derives `btn_rise`/`btn_fall` directly from the raw, un-debounced input, so every noisy raw toggle produces a spurious edge pulse instead of only genuine debounced transitions. Read `/app/TASK_CONTRACT.md` before changing anything; `/app/reproduce.py` demonstrates both bugs live.
+
+## Interface
+
+```
+module debounce #(parameter DEBOUNCE_CYCLES = 4) (
+    input  wire clk,
+    input  wire rst_n,
+    input  wire btn_raw,
+    output reg  btn_clean,
+    output reg  btn_rise,
+    output reg  btn_fall
+);
+```
+
+`btn_clean` is the debounced level. `btn_rise`/`btn_fall` each pulse high for exactly one cycle when `btn_clean` itself transitions.
+
+## Required guarantees
+
+1. `btn_clean` only changes to a new value once `btn_raw` has held that value steadily for `DEBOUNCE_CYCLES` consecutive cycles.
+2. If `btn_raw` changes again at any point *before* the debounce window completes, the timer restarts against the new value -- it never locks in a decision based on a value `btn_raw` no longer holds.
+3. `btn_rise` pulses high for exactly one cycle, only when `btn_clean` itself transitions from `0` to `1` -- never in response to a raw-input toggle that doesn&#x27;t produce a genuine `btn_clean` transition.
+4. `btn_fall` pulses high for exactly one cycle, only when `btn_clean` itself transitions from `1` to `0`, under the same rule.
+5. A raw input that bounces for longer than `DEBOUNCE_CYCLES` without ever settling produces no `btn_clean` transition and no edge pulses at all, for as long as the bouncing continues.
+
+## What&#x27;s out of scope
+
+Asynchronous reset, any debounce algorithm other than &quot;restart the timer on every change,&quot; and `DEBOUNCE_CYCLES` values other than the fixed default of `4`.
+
+## Deliverable
+
+Copy the complete `debounce.v` file to `/app/submission/debounce.v`. The verifier compiles and simulates only that file, in Icarus Verilog, in a separate container from the one you worked in. It does not read `/app/repo`.
+
+## Verification
+
+Five independent, weighted criteria, each a cocotb test running the compiled module cycle-by-cycle against an independent Python reference model, asserting `btn_clean`/`btn_rise`/`btn_fall` agree every single cycle:
+
+1. **Basic debounce.** A clean, non-bouncing transition, checked for correct timing. (15%)
+2. **Bounce rejected, timer restarts.** A raw input that bounces partway through a debounce window, checked that the window restarts and the final decision reflects the *last* stable value, not the first candidate. (30%)
+3. **Edges follow the debounced signal, not the raw one.** A bouncing raw signal that never produces a genuine `btn_clean` transition must never pulse `btn_rise`/`btn_fall`. (25%)
+4. **Repeated genuine transitions.** Several real `btn_clean` transitions over time, each producing exactly one correctly-timed edge pulse. (15%)
+5. **A longer randomized mixed sequence** of bounces and genuine transitions, checked every cycle. (15%)
+
+A full pass requires all five; per-criterion outcomes are retained separately for diagnosis. Only Icarus Verilog and cocotb are available at verification time; no network access.
+</pre></div><div class='sec'><div class='st'>Prompt Quality</div><div class='rat'>Clear bugs, interface, guarantees and deliverable; contract and reproduce script provided.</div></div><div class='sec'><div class='st'>Rubric Accuracy</div><div class='rat'>Rubrics are test names mapped to cocotb tests with matching weights; each maps to a described requirement.</div></div><div class='sec'><div class='st'>Test Correctness</div><div class='rat'>Grader stages its own Makefile and testbench from /tests and compares per cycle with an independent reference model; only the submitted debounce.v is trusted. Seed-7 sequence verified never settles to 1 (longest run is zeros, equal to clean), so test 3 is consistent. Minor residual: the Verilog submission runs in the sim and could in theory tamper with results.xml, low risk.</div></div><div class='sec'><div class='st'>Coverage &amp; Balance</div><div class='rat'>Weights favor the two bug-specific tests (restart, edges); fixtures catch both seeded bugs. Short directed sequences but randomized test adds breadth.</div></div><div class='sec'><div class='st'>Task Adequacy</div><div class='rat'>Starter file, contract, reproduce script available; iverilog and cocotb needed.</div></div></div><div id='d10' style='display:none'><div class='sec'><div class='st'>Prompt</div><pre>Fix the round-robin arbiter at `/app/repo/rr_arbiter.v`: after granting requester `k`, it rotates priority back onto `k` itself instead of past it, so a requester that keeps its request line held continuously is granted again on every subsequent cycle, starving every other requester indefinitely. Read `/app/TASK_CONTRACT.md` for the exact port list and arbitration rule before changing anything; `/app/reproduce.py` demonstrates the starvation live.
+
+## Interface
+
+```
+module rr_arbiter #(parameter N = 4) (
+    input  wire         clk,
+    input  wire         rst_n,
+    input  wire [N-1:0] req,
+    output reg  [N-1:0] grant
+);
+```
+
+`N` is fixed at `4` for grading. Each cycle, the arbiter grants exactly one requester among those currently asserting `req`, chosen by scanning starting from an internal rotating priority pointer and wrapping around; if no bit of `req` is set, `grant` is all zero.
+
+## Required guarantees
+
+1. When exactly one `req` bit is set, that requester is granted.
+2. When multiple `req` bits are set, exactly one is granted, and it is the one nearest to (at or after) the current priority pointer, wrapping around to index `0` if nothing qualifies before the end.
+3. After granting requester `k`, the priority pointer moves to `(k + 1) mod N` -- so `k` becomes the *lowest* priority for the next cycle, not the highest.
+4. If every requester holds its request line high continuously, grants rotate through all `N` requesters in order, each getting exactly one grant per full rotation of `N` cycles -- no requester is ever skipped or granted twice before the others have had a turn.
+5. When no `req` bit is set, `grant` is entirely zero and the priority pointer does not advance.
+
+## What&#x27;s out of scope
+
+Any `N` other than the fixed default of `4`, request priority weighting, and any combinational (same-cycle) path from `req` to `grant` -- `grant` is registered.
+
+## Deliverable
+
+Copy the complete `rr_arbiter.v` file to `/app/submission/rr_arbiter.v`. The verifier compiles and simulates only that file, in Icarus Verilog, in a separate container from the one you worked in. It does not read `/app/repo`.
+
+## Verification
+
+Five independent, weighted criteria, each a cocotb test running the compiled module cycle-by-cycle against an independent Python reference model, asserting `grant` agrees every single cycle:
+
+1. **Single requester.** Exactly one `req` bit active at a time. (15%)
+2. **Fairness under continuous contention.** All requesters held high; grants must rotate through everyone, not repeat. (30%)
+3. **Partial contention.** A subset of requesters held high, checked for fair alternation among just that subset. (20%)
+4. **Dynamic request changes.** Requesters join and leave over time, grant always tracks correctly. (15%)
+5. **A longer randomized mixed sequence** of request patterns, checked every cycle. (20%)
+
+A full pass requires all five; per-criterion outcomes are retained separately for diagnosis. Only Icarus Verilog and cocotb are available at verification time; no network access.
+</pre></div><div class='sec'><div class='st'>Prompt Quality</div><div class='rat'>Bug, interface, guarantees and deliverable path are explicit; contract and reproduce script are provided.</div></div><div class='sec'><div class='st'>Rubric Accuracy</div><div class='rat'>Rubrics are test-name placeholders mapped 1:1 to weighted cocotb tests (weights match grade.py); evaluable via test outcomes, signs positive.</div></div><div class='sec'><div class='st'>Test Correctness</div><div class='rat'>Grader copies its own Makefile/testbench into a temp dir and compiles only the submitted .v; per-cycle comparison against an independent reference model. No submission-controlled measurement. Minor: reset mid-run untested; submission Verilog could in principle use $system, negligible.</div></div><div class='sec'><div class='st'>Coverage &amp; Balance</div><div class='rat'>Five tests cover all five guarantees; idle-no-advance exercised by dynamic and 150-cycle random tests; fixed seed is hidden from the model. Weights favor fairness.</div></div><div class='sec'><div class='st'>Task Adequacy</div><div class='rat'>Dockerfile has iverilog and cocotb; buggy source, contract and reproducer present.</div></div></div><div id='d11' style='display:none'><div class='sec'><div class='st'>Prompt</div><pre>Fix the direct-mapped cache controller at `/app/repo/dm_cache.v`: on a miss that evicts a line still holding modified (&quot;dirty&quot;) data, it overwrites that line with the new tag and data without ever writing the old, modified data back to the backing store first -- so a write that only ever lived in the cache is silently lost the moment its line gets evicted. Read `/app/TASK_CONTRACT.md` for the exact port list and semantics before changing anything; `/app/reproduce.py` demonstrates the lost write live.
+
+## Interface
+
+```
+module dm_cache #(parameter ADDR_WIDTH = 8, parameter INDEX_WIDTH = 3, parameter DATA_WIDTH = 8) (
+    input  wire                  clk,
+    input  wire                  rst_n,
+    input  wire                  req,
+    input  wire                  we,
+    input  wire [ADDR_WIDTH-1:0] addr,
+    input  wire [DATA_WIDTH-1:0] wdata,
+    output reg                   done,
+    output reg                   hit,
+    output reg  [DATA_WIDTH-1:0] rdata
+);
+```
+
+A self-contained direct-mapped cache (8 lines, `INDEX_WIDTH=3`) over an internal backing store seeded with `mem[addr] == addr` at reset. Pulsing `req` for one cycle begins a read (`we=0`) or write (`we=1`) access to `addr`; `done`, `hit`, and (for reads, and for write misses) `rdata` become valid exactly one cycle later. Address bits `[INDEX_WIDTH-1:0]` select the cache line; the remaining high bits are the tag.
+
+## Required guarantees
+
+1. The first access to any address, on an empty cache, is a miss; `rdata` on a read miss equals the backing store&#x27;s value at that address.
+2. A write, hit or miss, stores `wdata` into the cache line and marks it dirty; a subsequent read of the same address is a hit returning that written value.
+3. **Dirty write-back.** When a miss evicts a line that is dirty, the evicted line&#x27;s data is written back to the backing store at its *own* address (reconstructed from its stored tag and the line index) before the line is overwritten with the new tag/data -- a later miss that re-fetches the evicted address must see the write-back&#x27;s effect, not the original seed value.
+4. Evicting a *clean* line (never written, or already written back) requires no write-back -- the backing store at that address is simply whatever it already was.
+5. `hit` and `rdata` are driven only in response to `req`; with `req` low, `done` stays low and neither changes.
+
+## What&#x27;s out of scope
+
+Any associativity other than direct-mapped, any `ADDR_WIDTH`/`INDEX_WIDTH`/`DATA_WIDTH` other than their fixed defaults of `8`/`3`/`8`, and multi-cycle backing-store latency -- the backing store responds within the same cycle.
+
+## Deliverable
+
+Copy the complete `dm_cache.v` file to `/app/submission/dm_cache.v`. The verifier compiles and simulates only that file, in Icarus Verilog, in a separate container from the one you worked in. It does not read `/app/repo`.
+
+## Verification
+
+Five independent, weighted criteria, each a cocotb test running the compiled module against an independent Python reference model of the same cache+backing-store semantics, checked purely through the external `req`/`we`/`addr`/`wdata`/`hit`/`rdata` interface -- no internal signal is ever inspected directly:
+
+1. **Basic hit/miss.** First access misses with the correct seeded value; repeat access hits. (15%)
+2. **Write-then-read-hit.** A write followed by a same-address read returns the written value, not the stale seed. (15%)
+3. **Dirty write-back on eviction.** The central bug: a dirty line&#x27;s data must survive eviction and be observable when its address is later re-fetched. (35%)
+4. **Clean eviction.** Evicting a never-written line requires no write-back; a later re-fetch sees the original seed value. (10%)
+5. **A longer randomized mixed sequence** of reads and writes across several colliding addresses, checked against the reference model on every access. (25%)
+
+A full pass requires all five; per-criterion outcomes are retained separately for diagnosis. Only Icarus Verilog and cocotb are available at verification time; no network access.
+</pre></div><div class='sec'><div class='st'>Prompt Quality</div><div class='rat'>Clear bug, contract, interface, deliverable path.</div></div><div class='sec'><div class='st'>Rubric Accuracy</div><div class='rat'>Rubrics are the five test names with weights; each maps to a test, deterministic.</div></div><div class='sec'><div class='st'>Test Correctness</div><div class="issue"><div class="ih"><span class="tag">other</span><b>test_mixed_random</b> </div><div class="ir">Depends on cross-test shared sim state: assumes backing store is not reset by rst_n, using address offsets; fragile if reset reinitialises mem, though contract says seeded at reset. Minor.</div></div><div class='rat'>Grader copies Makefile/tests from trusted tests dir and compiles only /app/submission/dm_cache.v; no submission-controlled measurement. Comparisons to reference model are sound. Weaknesses: done never checked, write-hit rdata unchecked.</div></div><div class='sec'><div class='st'>Coverage &amp; Balance</div><div class='rat'>Core bug heavily weighted (35) plus random; guarantee 5 and done signal untested; test 4 would pass an always-write-back impl.</div></div><div class='sec'><div class='st'>Task Adequacy</div><div class='rat'>Buggy repo, contract and reproducer provided; iverilog/cocotb available.</div></div></div><div id='d12' style='display:none'><div class='sec'><div class='st'>Prompt</div><pre>Fix the data-hazard forwarding unit at `/app/repo/forwarding_unit.v`: when both the EX/MEM and MEM/WB pipeline stages target the same destination register as a source operand, it forwards the older MEM/WB value instead of the more recent EX/MEM value. Read `/app/TASK_CONTRACT.md` for the exact port list and priority rule before changing anything; `/app/reproduce.py` demonstrates the stale forward live.
+
+## Interface
+
+```
+module forwarding_unit (
+    input  wire        clk,
+    input  wire        rst_n,
+    input  wire [4:0]  rs1,
+    input  wire [4:0]  rs2,
+    input  wire [4:0]  ex_mem_rd,
+    input  wire        ex_mem_valid,
+    input  wire [31:0] ex_mem_value,
+    input  wire [4:0]  mem_wb_rd,
+    input  wire        mem_wb_valid,
+    input  wire [31:0] mem_wb_value,
+    input  wire [31:0] regfile_rs1,
+    input  wire [31:0] regfile_rs2,
+    output reg  [31:0] rs1_value,
+    output reg  [31:0] rs2_value
+);
+```
+
+`ex_mem_valid`/`mem_wb_valid` indicate whether the instruction currently in that stage actually writes a register (a branch or store, for instance, would not). Register `5&#x27;d0` is hardwired zero and is never a hazard source, regardless of what `ex_mem_rd`/`mem_wb_rd` claim. All outputs are registered, valid one cycle after the inputs they reflect.
+
+## Required guarantees
+
+1. If neither stage&#x27;s destination matches a source register (or the match is to register `0`), that source&#x27;s value is the raw register-file read, unmodified.
+2. If only the EX/MEM stage&#x27;s destination matches a source register (and is nonzero, and `ex_mem_valid`), that source&#x27;s value is `ex_mem_value`.
+3. If only the MEM/WB stage&#x27;s destination matches a source register (and is nonzero, and `mem_wb_valid`), that source&#x27;s value is `mem_wb_value`.
+4. If *both* stages&#x27; destinations match the same source register, `ex_mem_value` wins -- the EX/MEM hazard is strictly more recent than the MEM/WB hazard and must take priority.
+5. `rs1` and `rs2` are resolved completely independently; a hazard affecting one must never influence the other.
+
+## What&#x27;s out of scope
+
+More than two forwarding sources, a register file write port, and any combinational (same-cycle) path from inputs to outputs -- both outputs are registered.
+
+## Deliverable
+
+Copy the complete `forwarding_unit.v` file to `/app/submission/forwarding_unit.v`. The verifier compiles and simulates only that file, in Icarus Verilog, in a separate container from the one you worked in. It does not read `/app/repo`.
+
+## Verification
+
+Five independent, weighted criteria, each a cocotb test running the compiled module cycle-by-cycle against an independent Python reference model, asserting `rs1_value`/`rs2_value` agree every single cycle:
+
+1. **No hazard.** Neither stage matches; raw register-file values pass through. (15%)
+2. **EX/MEM-only hazard.** (15%)
+3. **MEM/WB-only hazard.** (15%)
+4. **Both stages match the same register -- EX/MEM must win.** The central bug. (35%)
+5. **A longer randomized mixed sequence** of hazard combinations across both `rs1` and `rs2` independently, checked every cycle. (20%)
+
+A full pass requires all five; per-criterion outcomes are retained separately for diagnosis. Only Icarus Verilog and cocotb are available at verification time; no network access.
+</pre></div><div class='sec'><div class='st'>Prompt Quality</div><div class='rat'>Clear bug, interface, and priority rule; contract and reproducer provided.</div></div><div class='sec'><div class='st'>Rubric Accuracy</div><div class='rat'>Rubrics are test names mapped to weighted cocotb tests; weights sensible (35 on central bug). Evaluable via deterministic tests.</div></div><div class='sec'><div class='st'>Test Correctness</div><div class="issue"><div class="ih"><span class="tag">other</span><b>?</b> </div><div class="ir">Single-cycle/one-or-two vector fixtures; weak but redundant with random test.</div></div><div class="issue"><div class="ih"><span class="tag">other</span><b>?</b> </div><div class="ir">Reads output after the same edge where inputs applied, so a purely combinational implementation passes; stated &#x27;registered, one cycle later&#x27; requirement and sync reset are not verified.</div></div><div class='rat'>Grader copies its own Makefile/tests, compiles only submission file, python -I; no bypass via submission-controlled measurement. Reference model correct. Weakness: registered-output timing untested; test 4 only rs1==rs2.</div></div><div class='sec'><div class='st'>Coverage &amp; Balance</div><div class='rat'>Core priority and independence covered by random test; timing requirement gap.</div></div><div class='sec'><div class='st'>Task Adequacy</div><div class='rat'>Environment contains starter, contract, reproduce script; Icarus/cocotb available.</div></div></div><div id='d13' style='display:none'><div class='sec'><div class='st'>Prompt</div><pre>Fix the AXI-Lite-style write slave at `/app/repo/axi_lite_wr_slave.v`: after accepting a write, it asserts `bvalid` for exactly one cycle and then deasserts it unconditionally -- even if the master hasn&#x27;t asserted `bready` yet. This violates the fundamental AXI handshake rule that a `VALID` signal must stay asserted until the corresponding `READY` is observed high in the *same* cycle; if the master stalls `bready` for even one extra cycle, the response is silently dropped. Read `/app/TASK_CONTRACT.md` for the exact port list and handshake rule before changing anything; `/app/reproduce.py` demonstrates the dropped response live.
+
+## Interface
+
+```
+module axi_lite_wr_slave (
+    input  wire         clk,
+    input  wire         rst_n,
+    input  wire         awvalid,
+    output reg          awready,
+    input  wire [3:0]   awaddr,
+    input  wire         wvalid,
+    output reg          wready,
+    input  wire [31:0]  wdata,
+    output reg          bvalid,
+    input  wire         bready,
+    output wire [127:0] regs_flat
+);
+```
+
+Simplified for this task: `awvalid` and `wvalid` must be asserted together in the same cycle to be accepted (independent AW/W arrival timing is out of scope). `regs_flat` is 4 concatenated 32-bit registers (`{reg3, reg2, reg1, reg0}`), exposed only so the verifier can confirm a write&#x27;s effect -- it is not part of the AXI-Lite protocol itself. `awaddr[1:0]` selects one of the 4 registers.
+
+## Required guarantees
+
+1. `awready`/`wready` pulse high for exactly one cycle, only when `awvalid` and `wvalid` are both high, accepting the write and updating the addressed register to `wdata` that same cycle.
+2. `bvalid` asserts the cycle after an accepted write.
+3. **`bvalid` must not deassert while `bready` is low.** It stays asserted, unchanged, for as many cycles as the master stalls `bready` -- there is no bound on how long it may need to wait.
+4. The cycle `bready` is observed high while `bvalid` is high, the transaction completes: `bvalid` deasserts the following cycle and the slave is ready to accept a new write.
+5. Back-to-back writes, including ones separated by a multi-cycle `bready` stall, never corrupt a register&#x27;s contents or drop a response.
+
+## What&#x27;s out of scope
+
+Independent AW/W channel timing (they must arrive together), `BRESP` error responses (always implicitly OK), the AXI-Lite read channels, and burst transfers.
+
+## Deliverable
+
+Copy the complete `axi_lite_wr_slave.v` file to `/app/submission/axi_lite_wr_slave.v`. The verifier compiles and simulates only that file, in Icarus Verilog, in a separate container from the one you worked in. It does not read `/app/repo`.
+
+## Verification
+
+Five independent, weighted criteria, each a cocotb test running the compiled module cycle-by-cycle against an independent Python reference model, asserting `awready`/`wready`/`bvalid`/register contents agree every single cycle:
+
+1. **Basic write with immediate `bready`.** No stalling; the simple case. (15%)
+2. **`bvalid` holds through a multi-cycle `bready` stall.** The central bug. (35%)
+3. **Register persistence** across all four registers, checked via `regs_flat`. (15%)
+4. **Back-to-back writes with varying stall lengths.** (15%)
+5. **A longer randomized mixed sequence**, checked every cycle. (20%)
+
+A full pass requires all five; per-criterion outcomes are retained separately for diagnosis. Only Icarus Verilog and cocotb are available at verification time; no network access.
+</pre></div><div class='sec'><div class='st'>Prompt Quality</div><div class='rat'>Clear bug and guarantees; minor ambiguity on whether bvalid is visible simultaneously with awready or one cycle later in cocotb sampling.</div></div><div class='sec'><div class='st'>Rubric Accuracy</div><div class='rat'>Rubrics are just test names mapped to weights; they are positive and evaluable via cocotb results.</div></div><div class='sec'><div class='st'>Test Correctness</div><div class="issue"><div class="ih"><span class="tag">other</span><b>test_basic_write_immediate_bready / all</b> </div><div class="ir">Reference model asserts bvalid=1 in the same sampled cycle as awready/wready=1 (all registered post-edge), which can be read as contradicting the prompt&#x27;s &#x27;bvalid asserts the cycle after an accepted write&#x27;. An implementation that follows the literal wording (bvalid one cycle later) would fail every test. Prompt does not pin down this timing.</div></div><div class='rat'>Grader copies its own Makefile/tests and compiles only the submission .v, so no trust bypass; sim run unprivileged. Weaknesses: no reset test, awvalid/wvalid asserted during RESP state (must be ignored) never exercised, random test only issues writes when idle, and wready/awready timing ambiguity vs prompt.</div></div><div class='sec'><div class='st'>Coverage &amp; Balance</div><div class='rat'>Core stall bug heavily weighted (35); gaps in negative/edge cases let a lax implementation pass.</div></div><div class='sec'><div class='st'>Task Adequacy</div><div class='rat'>Repo, contract and reproduce script supplied; Icarus+cocotb suffice.</div></div></div><div id='d14' style='display:none'><div class='sec'><div class='st'>Prompt</div><pre>Fix the interrupt controller at `/app/repo/intr_ctrl.v`: acknowledging the currently-reported interrupt clears every sticky pending bit, not just the one being serviced -- so any other interrupt source that was also pending gets silently dropped the moment the CPU acks whichever source happened to be reported. Read `/app/TASK_CONTRACT.md` for the exact port list and semantics before changing anything; `/app/reproduce.py` demonstrates the dropped interrupt live.
+
+## Interface
+
+```
+module intr_ctrl #(parameter N = 4) (
+    input  wire         clk,
+    input  wire         rst_n,
+    input  wire [N-1:0] irq_in,
+    input  wire [N-1:0] irq_enable,
+    input  wire         ack,
+    output reg           irq_out,
+    output reg  [N-1:0]  pending,
+    output reg  [1:0]    irq_id
+);
+```
+
+`N` is fixed at `4` for grading. `pending[i]` is a sticky bit, latched on a rising edge of `irq_in[i]` and held until explicitly cleared -- it does not depend on `irq_in[i]` still being high. `irq_out` reports whether any enabled source is pending; `irq_id` is the lowest index among currently pending *and* enabled sources (lowest index wins ties). All outputs are registered, one cycle after the inputs/state they reflect.
+
+## Required guarantees
+
+1. A rising edge on `irq_in[i]` sets `pending[i]`, which then stays set even if `irq_in[i]` returns low, until explicitly cleared.
+2. `irq_out` is high exactly when at least one bit of `pending &amp; irq_enable` is set; `irq_id` is the lowest such index.
+3. **`ack` clears only `pending[irq_id]`** -- the specific source currently being reported -- and must leave every other pending bit exactly as it was.
+4. After an acknowledged source&#x27;s bit clears, if another enabled source is still pending, `irq_out` remains high and `irq_id` updates to that next-lowest pending-and-enabled index.
+5. A source with `irq_enable[i] = 0` is excluded from `irq_out`/`irq_id` even while `pending[i]` is set; re-enabling it later correctly reports it again if it is still pending.
+
+## What&#x27;s out of scope
+
+Any `N` other than the fixed default of `4`, interrupt priority levels beyond simple index order, and nested/preemptive interrupt handling.
+
+## Deliverable
+
+Copy the complete `intr_ctrl.v` file to `/app/submission/intr_ctrl.v`. The verifier compiles and simulates only that file, in Icarus Verilog, in a separate container from the one you worked in. It does not read `/app/repo`.
+
+## Verification
+
+Five independent, weighted criteria, each a cocotb test running the compiled module cycle-by-cycle against an independent Python reference model, asserting `irq_out`/`pending`/`irq_id` agree every single cycle:
+
+1. **Sticky latching.** A pulse sets pending and it stays set after the pulse ends. (15%)
+2. **Priority encoding.** Multiple pending-and-enabled sources, lowest index reported. (15%)
+3. **Selective ack.** The central bug: acking one source must not clear any other pending source. (35%)
+4. **Cascading acks.** After clearing the reported source, the next pending source is correctly reported. (15%)
+5. **A longer randomized mixed sequence** of interrupts, enables, and acks, checked every cycle. (20%)
+
+A full pass requires all five; per-criterion outcomes are retained separately for diagnosis. Only Icarus Verilog and cocotb are available at verification time; no network access.
+</pre></div><div class='sec'><div class='st'>Prompt Quality</div><div class='rat'>Clear bug, port list, semantics, deliverable. Contract aligns with reference model.</div></div><div class='sec'><div class='st'>Rubric Accuracy</div><div class='rat'>Rubrics are only test names mapped to tests; weights sensible and positive. Evaluable via tests.</div></div><div class='sec'><div class='st'>Test Correctness</div><div class="issue"><div class="ih"><span class="tag">other</span><b>grade.py / run_simulation</b> </div><div class="ir">Grader runs the submission-controlled Verilog in the same workdir (mode 777) as results.xml, with only Icarus; a submission using $system could overwrite results.xml (read back for measurement) to fake passes. Measurement trusts a file writable by submission code.</div></div><div class="issue"><div class="ih"><span class="tag">other</span><b>test_mixed_random / enable gating</b> </div><div class="ir">Requirement 5 (disable then re-enable still pending) has no directed test; only a 150-cycle seeded random run covers it. rst_n behavior is never checked, and the reference model ignores reset.</div></div><div class='rat'>Directed tests compare every cycle to an independent model and are mostly sound; selective-ack checks real behavior. Main concern is the results.xml bypass; enable gating coverage is weak/only random.</div></div><div class='sec'><div class='st'>Coverage &amp; Balance</div><div class='rat'>Core bug covered with highest weight; guarantee 5 only incidentally by random test.</div></div><div class='sec'><div class='st'>Task Adequacy</div><div class='rat'>Repo, contract, reproduce script and Icarus available.</div></div></div></div><script>
+document.querySelectorAll('tr[data-i]').forEach(function(t){t.onclick=function(){var i=this.dataset.i;document.getElementById('mt').textContent=this.cells[0].innerText;document.getElementById('mb').innerHTML=document.getElementById('d'+i).innerHTML;document.getElementById('m').classList.add('open')}});
+document.getElementById('m').onclick=function(e){if(e.target===this)this.classList.remove('open')};
+document.querySelectorAll('.fb').forEach(function(b){b.onclick=function(){document.querySelectorAll('.fb').forEach(x=>x.classList.remove('on'));this.classList.add('on');var f=this.dataset.f;document.querySelectorAll('tr[data-i]').forEach(function(r){r.style.display=(f==='all'||(f==='flag')===r.classList.contains('flag'))?'':'none'})}});
+</script></div></body></html>

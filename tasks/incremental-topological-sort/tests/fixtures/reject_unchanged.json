@@ -1,0 +1,52 @@
+{
+  "ops": [
+    {
+      "op": "add_edge",
+      "u": "p",
+      "v": "q",
+      "expect": true
+    },
+    {
+      "op": "add_edge",
+      "u": "q",
+      "v": "r",
+      "expect": true
+    },
+    {
+      "op": "add_edge",
+      "u": "r",
+      "v": "p",
+      "expect": false
+    },
+    {
+      "op": "order_check"
+    },
+    {
+      "op": "add_edge",
+      "u": "p",
+      "v": "r",
+      "expect": true
+    },
+    {
+      "op": "order_check"
+    },
+    {
+      "op": "add_edge",
+      "u": "p",
+      "v": "p",
+      "expect": false
+    },
+    {
+      "op": "order_check"
+    },
+    {
+      "op": "add_edge",
+      "u": "r",
+      "v": "s",
+      "expect": true
+    },
+    {
+      "op": "order_check"
+    }
+  ]
+}
