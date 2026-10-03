@@ -1,0 +1,15 @@
+{
+  "max_size": 3,
+  "ops": [
+    {"op": "put", "key": "k1", "value": "v1", "ttl": 100},
+    {"op": "put", "key": "k2", "value": "v2", "ttl": 100},
+    {"op": "get_hit", "key": "k1", "value": "v1"},
+    {"op": "put", "key": "k3", "value": "v3", "ttl": 100},
+    {"op": "expect_len", "value": 3},
+    {"op": "get_hit", "key": "k2", "value": "v2"},
+    {"op": "get_hit", "key": "k3", "value": "v3"},
+    {"op": "put", "key": "k1", "value": "v1-updated", "ttl": 100},
+    {"op": "get_hit", "key": "k1", "value": "v1-updated"},
+    {"op": "expect_len", "value": 3}
+  ]
+}

@@ -1,0 +1,11 @@
+{
+  "capacity": 5,
+  "refill_rate": 1,
+  "ops": [
+    {"op": "try_acquire", "cost": 5, "expect": true},
+    {"op": "advance", "by": 100},
+    {"op": "expect_available", "value": 5},
+    {"op": "try_acquire", "cost": 5, "expect": true},
+    {"op": "try_acquire", "cost": 1, "expect": false}
+  ]
+}

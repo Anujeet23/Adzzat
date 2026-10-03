@@ -1,0 +1,14 @@
+{
+  "ops": [
+    {"op": "add_node", "node": "z"},
+    {"op": "add_node", "node": "y"},
+    {"op": "add_node", "node": "a"},
+    {"op": "add_edge", "u": "a", "v": "z", "expect": true},
+    {"op": "add_edge", "u": "z", "v": "y", "expect": true},
+    {"op": "order_check"},
+    {"op": "add_node", "node": "m"},
+    {"op": "add_edge", "u": "y", "v": "m", "expect": true},
+    {"op": "add_edge", "u": "m", "v": "a", "expect": false},
+    {"op": "order_check"}
+  ]
+}

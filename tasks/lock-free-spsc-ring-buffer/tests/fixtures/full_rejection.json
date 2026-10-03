@@ -1,0 +1,13 @@
+{
+  "capacity": 2,
+  "ops": [
+    {"op": "push", "item": "a", "expect": true},
+    {"op": "push", "item": "b", "expect": true},
+    {"op": "push", "item": "c", "expect": false},
+    {"op": "expect_len", "value": 2},
+    {"op": "pop", "expect": "value", "value": "a"},
+    {"op": "pop", "expect": "value", "value": "b"},
+    {"op": "push", "item": "c", "expect": true},
+    {"op": "pop", "expect": "value", "value": "c"}
+  ]
+}

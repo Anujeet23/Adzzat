@@ -1,0 +1,19 @@
+{
+  "capacity": 100,
+  "refill_rate": 1,
+  "ops": [
+    {"op": "try_acquire", "cost": 100, "expect": true},
+    {"op": "advance", "by": 0.9},
+    {"op": "expect_available", "value": 0.9},
+    {"op": "advance", "by": 0.9},
+    {"op": "expect_available", "value": 1.8},
+    {"op": "advance", "by": 0.9},
+    {"op": "expect_available", "value": 2.7},
+    {"op": "advance", "by": 0.9},
+    {"op": "expect_available", "value": 3.6},
+    {"op": "advance", "by": 0.9},
+    {"op": "expect_available", "value": 4.5},
+    {"op": "try_acquire", "cost": 4, "expect": true},
+    {"op": "try_acquire", "cost": 1, "expect": false}
+  ]
+}

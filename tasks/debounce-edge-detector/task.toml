@@ -1,0 +1,25 @@
+schema_version = "1.2"
+artifacts = ["/app/submission"]
+[task]
+name = "adzzat/debounce-edge-detector"
+description = "Fix a button debouncer's non-restarting timer and raw-derived edge pulses, verified by cycle-accurate Icarus Verilog / cocotb simulation against an independent reference model."
+keywords = ["rtl", "verilog", "digital-design", "debounce"]
+[metadata]
+difficulty = "unvalidated"
+category = "rtl"
+version = "0.1.0"
+[agent]
+timeout_sec = 14400.0
+[verifier]
+timeout_sec = 1800.0
+environment_mode = "separate"
+[verifier.environment]
+build_timeout_sec = 900.0
+cpus = 2
+memory_mb = 2048
+storage_mb = 4096
+[environment]
+build_timeout_sec = 900.0
+cpus = 2
+memory_mb = 2048
+storage_mb = 4096

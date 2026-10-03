@@ -1,0 +1,13 @@
+{
+  "max_size": 2,
+  "ops": [
+    {"op": "put", "key": "y", "value": "vy", "ttl": 1000},
+    {"op": "put", "key": "x", "value": "vx", "ttl": 5},
+    {"op": "advance", "by": 10},
+    {"op": "put", "key": "z", "value": "vz", "ttl": 1000},
+    {"op": "expect_len", "value": 2},
+    {"op": "get_hit", "key": "y", "value": "vy"},
+    {"op": "get_hit", "key": "z", "value": "vz"},
+    {"op": "get_miss", "key": "x"}
+  ]
+}

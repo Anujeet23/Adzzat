@@ -1,0 +1,15 @@
+{
+  "max_size": 3,
+  "ops": [
+    {"op": "put", "key": "a", "value": "va", "ttl": 1000},
+    {"op": "put", "key": "b", "value": "vb", "ttl": 1000},
+    {"op": "put", "key": "c", "value": "vc", "ttl": 1000},
+    {"op": "get_hit", "key": "a", "value": "va"},
+    {"op": "put", "key": "d", "value": "vd", "ttl": 1000},
+    {"op": "expect_len", "value": 3},
+    {"op": "get_hit", "key": "a", "value": "va"},
+    {"op": "get_miss", "key": "b"},
+    {"op": "get_hit", "key": "c", "value": "vc"},
+    {"op": "get_hit", "key": "d", "value": "vd"}
+  ]
+}

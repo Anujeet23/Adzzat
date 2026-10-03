@@ -1,0 +1,8 @@
+{
+  "ops": [
+    {"op": "add_edge", "u": "a", "v": "b", "expect": true},
+    {"op": "add_edge", "u": "b", "v": "c", "expect": true},
+    {"op": "add_edge", "u": "c", "v": "d", "expect": true},
+    {"op": "order_check"}
+  ]
+}

@@ -1,0 +1,29 @@
+{
+  "capacity": 4,
+  "ops": [
+    {"op": "pop", "expect": "empty"},
+    {"op": "push", "item": "a", "expect": true},
+    {"op": "push", "item": "b", "expect": true},
+    {"op": "pop", "expect": "value", "value": "a"},
+    {"op": "push", "item": "c", "expect": true},
+    {"op": "push", "item": "d", "expect": true},
+    {"op": "push", "item": "e", "expect": true},
+    {"op": "expect_len", "value": 4},
+    {"op": "push", "item": "x", "expect": false},
+    {"op": "expect_len", "value": 4},
+    {"op": "pop", "expect": "value", "value": "b"},
+    {"op": "pop", "expect": "value", "value": "c"},
+    {"op": "push", "item": "f", "expect": true},
+    {"op": "push", "item": "g", "expect": true},
+    {"op": "expect_len", "value": 4},
+    {"op": "pop", "expect": "value", "value": "d"},
+    {"op": "pop", "expect": "value", "value": "e"},
+    {"op": "pop", "expect": "value", "value": "f"},
+    {"op": "pop", "expect": "value", "value": "g"},
+    {"op": "expect_len", "value": 0},
+    {"op": "pop", "expect": "empty"},
+    {"op": "push", "item": "h", "expect": true},
+    {"op": "pop", "expect": "value", "value": "h"},
+    {"op": "expect_len", "value": 0}
+  ]
+}
